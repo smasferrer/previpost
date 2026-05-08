@@ -1,0 +1,36 @@
+{
+  "name": "Previpost Frontend Dev Container",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "build": {
+    "dockerfile": "Containerfile",
+    "context": "."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "23.11.0"
+    },
+    "ghcr.io/devcontainers-community/npm-features/typescript:1": {
+        "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/common-utils": {
+			"installZsh": true,
+			"configureZshAsDefault": true,
+			"installOhMyZsh": true,
+			"ohMyZshPlugins": "git zsh-autosuggestions zsh-syntax-highlighting"
+		}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "aaron-bond.better-comments",
+        "lovebird.better-comments-enhanced",
+        "esbenp.prettier-vscode",
+        "christian-kohler.npm-intellisense",
+        "oouo-diogo-perdigao.docthis"
+      ]
+    }
+  },
+
+  "remoteUser": "vscode"
+}
