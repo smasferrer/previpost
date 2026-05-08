@@ -1,5 +1,7 @@
 FROM node:24.15.0-alpine as builder
-# FROM nexuscloud.previred.com:8081/ubi8/nodejs-18 as builder
+# pv1prdsat150.sistemas.previred/previred/ocp_docker_images/ubi9_nodejs-24
+# FROM pv1prdsat150.sistemas.previred/previred/ocp_docker_images/ubi9_nodejs-24 as builder
+ 
 USER 0
 WORKDIR /usr/previpost
 #COPY .npmrc ./
