@@ -1,16 +1,16 @@
 import { Link } from 'react-router'
 import apiIcon from '../assets/img/icono-apiconsultas.svg'
-import rexIcon from '../assets/img/icono-rex.svg'
+import recextIcon from '../assets/img/icono-recext.svg'
 import logo from '../assets/img/logo-bajada.svg'
 import { appPaths } from '../router/paths'
 
 const options = [
   {
-    title: 'Consulta REX',
+    title: 'Consulta Rec. Externa',
     description: 'Realiza consultas en API de Recaudación Externa.',
-    icon: rexIcon,
-    iconAlt: 'Icono Consulta REX',
-    to: appPaths.consultaRex,
+    icon: recextIcon,
+    iconAlt: 'Icono Consulta Rec. Externa',
+    to: appPaths.consultaRecext,
   },
   {
     title: 'API Consultas',

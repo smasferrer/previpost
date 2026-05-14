@@ -1,4 +1,4 @@
-export type ServiceCode = 'rex' | 'api'
+export type ServiceCode = 'recext' | 'api'
 
 export interface SelectOption {
   value: string
@@ -7,7 +7,7 @@ export interface SelectOption {
 
 export type AfpOption = SelectOption
 
-export interface RexConsultationFormValues {
+export interface RecextConsultationFormValues {
   rut: string
   names: string
   paternalLastName: string

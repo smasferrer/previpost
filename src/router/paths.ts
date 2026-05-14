@@ -1,5 +1,5 @@
 export const appPaths = {
   home: '/',
-  consultaRex: '/consulta-rex',
+  consultaRecext: '/consulta-recext',
   apiConsultas: '/api-consultas',
 } as const

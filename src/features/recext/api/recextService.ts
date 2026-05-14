@@ -3,7 +3,7 @@ import apiClient from '../../../lib/http/apiClient'
 import type {
   AfpOption,
   ApiCollectionResponse,
-  RexConsultationFormValues,
+  RecextConsultationFormValues,
 } from '../types'
 
 const fallbackAfpOptions: AfpOption[] = [
@@ -35,8 +35,8 @@ export const getAfpOptions = async (): Promise<AfpOption[]> => {
   return extractCollection(data)
 }
 
-export const submitRexConsultation = async (
-  payload: RexConsultationFormValues,
+export const submitRecextConsultation = async (
+  payload: RecextConsultationFormValues,
 ) => {
   const { data } = await apiClient.post('/rex/consultations', payload)
 

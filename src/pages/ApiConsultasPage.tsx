@@ -22,13 +22,13 @@ function ApiConsultasPage() {
                 <select
                   value="api"
                   onChange={(event) => {
-                    if (event.target.value === 'rex') {
-                      navigate(appPaths.consultaRex)
+                    if (event.target.value === 'recext') {
+                      navigate(appPaths.consultaRecext)
                     }
                   }}
                   className="w-full appearance-none bg-transparent pr-7 text-[1rem] text-[#f3f1e9] outline-none sm:text-[1.05rem]"
                 >
-                  <option value="rex">Consulta REX</option>
+                  <option value="recext">Consulta Rec. Externa</option>
                   <option value="api">API Consultas</option>
                 </select>
                 <span className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-[0.8rem] text-[#f3f1e9]">
