@@ -12,6 +12,7 @@ interface RecextFormSectionProps {
   canSubmit: boolean
   isSubmitting: boolean
   onFieldChange: (name: keyof RecextConsultationFormValues, value: string) => void
+  onPasteUserClick: () => void
   onSubmit: () => void
 }
 
@@ -22,6 +23,7 @@ function RecextFormSection({
   canSubmit,
   isSubmitting,
   onFieldChange,
+  onPasteUserClick,
   onSubmit,
 }: RecextFormSectionProps) {
   const isSubmitDisabled = !canSubmit || isSubmitting
@@ -32,9 +34,14 @@ function RecextFormSection({
         <div>
           <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <h2 className="mb-8 text-[1.2rem] font-medium text-[#02d3ff] sm:text-[1.35rem]">
-                Pegar Información de Usuario
-              </h2>
+              <button
+                className="mb-8 text-left text-[1.2rem] font-medium text-[#02d3ff] transition hover:text-[#6ee8ff] focus:outline-none focus:ring-2 focus:ring-[#02d3ff]/50 sm:text-[1.35rem]"
+                disabled={isSubmitting}
+                onClick={onPasteUserClick}
+                type="button"
+              >
+                Pegar información de Usuario
+              </button>
               <p className="text-[1.05rem] text-[#8b8a8f] sm:text-[1.1rem]">
                 Información obligatoria
               </p>
@@ -81,9 +88,14 @@ function RecextFormSection({
       ) : (
         <div className="flex min-h-[560px] flex-col">
           <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <span className="text-[1.8rem] font-medium text-[#292929] sm:text-[2rem]">
-              Pegar Información de Usuario
-            </span>
+            <button
+              className="text-left text-[1.8rem] font-medium text-[#292929] transition hover:text-[#02d3ff] focus:outline-none focus:ring-2 focus:ring-[#02d3ff]/50 sm:text-[2rem]"
+              disabled={isSubmitting}
+              onClick={onPasteUserClick}
+              type="button"
+            >
+              Pegar información de Usuario
+            </button>
 
             <RecextActionButton
               disabled={isSubmitDisabled}

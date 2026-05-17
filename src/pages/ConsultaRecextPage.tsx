@@ -3,6 +3,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router'
 import RecextFormSection from '../features/recext/components/RecextFormSection'
 import RecextPageHeader from '../features/recext/components/RecextPageHeader'
+import RecextPasteUserModal from '../features/recext/components/RecextPasteUserModal'
 import RecextResponsePanel from '../features/recext/components/RecextResponsePanel'
 import RecextToolbar from '../features/recext/components/RecextToolbar'
 import {
@@ -20,15 +21,50 @@ import { mandatoryFields } from '../features/recext/formFields'
 import { useRecextAfpOptionsQuery } from '../features/recext/hooks/useRecextAfpOptionsQuery'
 import {
   initialRecextFormValues,
-  type RecextConsultationResponse,
   type RecextConsultationRequest,
+  type RecextConsultationError,
   type RecextConsultationFormValues,
+  type RecextConsultationResponse,
 } from '../features/recext/types'
 import { appPaths } from '../router/paths'
+
+const stringifyPastedValue = (value: unknown) => {
+  if (value === undefined || value === null) {
+    return ''
+  }
+
+  return String(value)
+}
+
+const mapPastedUserToFormValues = (
+  currentValues: RecextConsultationFormValues,
+  payload: Record<string, unknown>,
+): RecextConsultationFormValues => ({
+  ...currentValues,
+  rut: stringifyPastedValue(payload.rut),
+  dv: stringifyPastedValue(payload.dv),
+  names: stringifyPastedValue(payload.nombres),
+  paternalLastName: stringifyPastedValue(payload.apellidoP),
+  maternalLastName: stringifyPastedValue(payload.apellidoM),
+  email: stringifyPastedValue(payload.email),
+  returnUrl: stringifyPastedValue(payload.urlRetorno),
+  paymentType: stringifyPastedValue(payload.tipoPago),
+  sex: stringifyPastedValue(payload.sexo),
+  phone: stringifyPastedValue(payload.telefono),
+  nationality: stringifyPastedValue(payload.nacionalidad),
+  workerType: stringifyPastedValue(payload.tipoTrabajador),
+  taxRegime: stringifyPastedValue(payload.regimenTributario),
+  totalPayment: stringifyPastedValue(payload.totalPago),
+  fundsOrigin: stringifyPastedValue(payload.origenFondos),
+  commune: stringifyPastedValue(payload.comuna),
+  city: stringifyPastedValue(payload.ciudad),
+  region: stringifyPastedValue(payload.region),
+})
 
 function ConsultaRecextPage() {
   const navigate = useNavigate()
   const [afp, setAfp] = useState('')
+  const [isPasteModalOpen, setIsPasteModalOpen] = useState(false)
   const [formValues, setFormValues] = useState<RecextConsultationFormValues>(
     initialRecextFormValues,
   )
@@ -53,7 +89,7 @@ function ConsultaRecextPage() {
   })
   const consultationMutation = useMutation<
     RecextConsultationResponse,
-    unknown,
+    RecextConsultationError,
     RecextConsultationRequest
   >({
     mutationFn: submitRecextConsultation,
@@ -82,12 +118,6 @@ function ConsultaRecextPage() {
       label: `${comuna.glosa} (${comuna.codComuna})`,
     })),
   }
-  const responseErrorMessage =
-    consultationMutation.error instanceof Error
-      ? consultationMutation.error.message
-      : consultationMutation.error
-        ? 'No fue posible ejecutar la consulta. Revisa los datos e intenta nuevamente.'
-        : null
   const responseStatusLabel = consultationMutation.isPending
     ? 'Consultando'
     : consultationMutation.isError
@@ -120,6 +150,26 @@ function ConsultaRecextPage() {
     consultationMutation.mutate(buildRecextRequest(formValues, afp))
   }
 
+  const handleLoadPastedUserData = (payload: Record<string, unknown>) => {
+    if (!isRecextAfpCode(afp)) {
+      return 'Selecciona una AFP antes de cargar y consultar datos.'
+    }
+
+    const nextFormValues = mapPastedUserToFormValues(formValues, payload)
+    const missingMandatoryField = mandatoryFields.find(
+      ({ name }) => !nextFormValues[name].trim(),
+    )
+
+    if (missingMandatoryField) {
+      return `El JSON no incluye un valor para el campo obligatorio: ${missingMandatoryField.label}.`
+    }
+
+    setFormValues(nextFormValues)
+    consultationMutation.mutate(buildRecextRequest(nextFormValues, afp))
+
+    return null
+  }
+
   return (
     <main className="min-h-screen bg-[#1c1a22] px-4 py-6 text-[#f3f1e9] sm:px-6 lg:px-8">
       <div className="mx-auto max-w-[1920px]">
@@ -143,18 +193,26 @@ function ConsultaRecextPage() {
               canSubmit={canSubmit}
               isSubmitting={consultationMutation.isPending}
               onFieldChange={handleFieldChange}
+              onPasteUserClick={() => setIsPasteModalOpen(true)}
               onSubmit={handleSubmit}
             />
           </section>
 
           <RecextResponsePanel
-            data={consultationMutation.data}
-            errorMessage={responseErrorMessage}
+            error={consultationMutation.error}
             isLoading={consultationMutation.isPending}
+            response={consultationMutation.data}
             statusLabel={responseStatusLabel}
           />
         </div>
       </div>
+
+      <RecextPasteUserModal
+        isOpen={isPasteModalOpen}
+        isSubmitting={consultationMutation.isPending}
+        onCancel={() => setIsPasteModalOpen(false)}
+        onLoadUserData={handleLoadPastedUserData}
+      />
     </main>
   )
 }

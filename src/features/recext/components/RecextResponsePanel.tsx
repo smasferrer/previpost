@@ -1,9 +1,12 @@
-import type { RecextConsultationResponse } from '../types'
+import type {
+  RecextConsultationError,
+  RecextConsultationResponse,
+} from '../types'
 
 interface RecextResponsePanelProps {
-  data?: RecextConsultationResponse
-  errorMessage?: string | null
+  error?: RecextConsultationError | null
   isLoading: boolean
+  response?: RecextConsultationResponse
   statusLabel: string
 }
 
@@ -68,13 +71,76 @@ const findReturnUrl = (value: unknown): string | null => {
   return null
 }
 
+const buildStatusLabel = (
+  response: RecextConsultationResponse | undefined,
+  error: RecextConsultationError | null | undefined,
+  fallbackLabel: string,
+) => {
+  if (response) {
+    return [response.status, response.statusText].filter(Boolean).join(' ')
+  }
+
+  if (error) {
+    if (error.status) {
+      return [error.status, error.statusText].filter(Boolean).join(' ')
+    }
+
+    return 'Sin respuesta HTTP'
+  }
+
+  return fallbackLabel
+}
+
+const buildStatusClassName = (
+  response: RecextConsultationResponse | undefined,
+  error: RecextConsultationError | null | undefined,
+) => {
+  if (response) {
+    return 'border-[#65d47a]/40 bg-[#112318] text-[#8df0a0]'
+  }
+
+  if (error) {
+    return error.status
+      ? 'border-[#f79b63]/40 bg-[#2b1712] text-[#ffb28b]'
+      : 'border-[#f7d263]/40 bg-[#292312] text-[#ffe08a]'
+  }
+
+  return 'border-white/5 bg-[#111015] text-[#96959a]'
+}
+
+const getVisiblePayload = (
+  response: RecextConsultationResponse | undefined,
+  error: RecextConsultationError | null | undefined,
+) => {
+  if (response) {
+    return response.data
+  }
+
+  if (error?.data !== undefined) {
+    return error.data
+  }
+
+  if (error) {
+    return { message: error.message }
+  }
+
+  return undefined
+}
+
 function RecextResponsePanel({
-  data,
-  errorMessage,
+  error,
   isLoading,
+  response,
   statusLabel,
 }: RecextResponsePanelProps) {
-  const returnUrl = findReturnUrl(data)
+  const visiblePayload = getVisiblePayload(response, error)
+  const returnUrl = findReturnUrl(response?.data)
+  const visibleStatusLabel = isLoading
+    ? statusLabel
+    : buildStatusLabel(response, error, statusLabel)
+  const statusClassName = isLoading
+    ? buildStatusClassName(undefined, undefined)
+    : buildStatusClassName(response, error)
 
   const handleOpenReturnUrl = () => {
     if (!returnUrl) {
@@ -96,19 +162,23 @@ function RecextResponsePanel({
       </div>
 
       <div className="rounded-[1rem] bg-[#1b1a22] p-4">
-        <div className="mb-4 rounded-[0.8rem] bg-[#111015] px-6 py-3 text-[1rem] text-[#96959a] sm:text-[1.05rem]">
-          {statusLabel}
+        <div
+          className={`mb-4 rounded-[0.8rem] border px-6 py-3 text-[1rem] font-semibold sm:text-[1.05rem] ${statusClassName}`}
+        >
+          {visibleStatusLabel}
         </div>
 
         <div className="min-h-[435px] rounded-[0.95rem] bg-[#1b1a22] p-5 text-[0.95rem] text-[#96959a]">
           {isLoading ? 'Consultando backend...' : null}
-          {!isLoading && errorMessage ? (
-            <p className="text-[#f79b63]">{errorMessage}</p>
+          {!isLoading && error ? (
+            <p className="text-[#f79b63]">
+              {error.message || 'No fue posible ejecutar la consulta.'}
+            </p>
           ) : null}
-          {!isLoading && !errorMessage && data !== undefined ? (
+          {!isLoading && !error && response !== undefined ? (
             <p>Consulta ejecutada correctamente.</p>
           ) : null}
-          {!isLoading && !errorMessage && returnUrl ? (
+          {!isLoading && !error && returnUrl ? (
             <div className="mt-5 rounded-[0.8rem] border border-[#34d5d0]/30 bg-[#111015] p-4">
               <p className="mb-2 text-[0.85rem] font-semibold text-[#34d5d0]">
                 URL de retorno detectada
@@ -134,7 +204,7 @@ function RecextResponsePanel({
             Json
           </div>
           <pre className="min-h-[258px] overflow-auto bg-[#1b1a22] p-5 text-[0.85rem] leading-relaxed text-[#96959a]">
-            {formatJson(data)}
+            {formatJson(visiblePayload)}
           </pre>
         </div>
       </div>

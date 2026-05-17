@@ -7,6 +7,7 @@ import { env } from '../../config/env'
 
 export interface ApiError {
   status: number
+  statusText?: string
   message: string
   details?: unknown
 }
@@ -42,10 +43,18 @@ const toApiError = (error: AxiosError<unknown>): ApiError => {
     typeof responseData.message === 'string'
       ? responseData.message
       : undefined
+  const responseError =
+    typeof responseData === 'object' &&
+    responseData !== null &&
+    'error' in responseData &&
+    typeof responseData.error === 'string'
+      ? responseData.error
+      : undefined
 
   return {
     status: error.response?.status ?? 0,
-    message: responseMessage ?? error.message ?? 'Unexpected API error',
+    statusText: error.response?.statusText,
+    message: responseMessage ?? responseError ?? error.message ?? 'Unexpected API error',
     details: responseData,
   }
 }

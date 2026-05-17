@@ -1,4 +1,5 @@
 import { env } from '../../../config/env'
+import type { ApiError } from '../../../lib/http/apiClient'
 import apiClient from '../../../lib/http/apiClient'
 import type {
   AfpOption,
@@ -54,12 +55,27 @@ export const getAfpOptions = async (): Promise<AfpOption[]> => {
 export const submitRecextConsultation = async (
   payload: RecextConsultationRequest,
 ): Promise<RecextConsultationResponse> => {
-  const { data } = await apiClient.post<RecextConsultationResponse>(
-    '/api/form/external',
-    payload,
-  )
+  try {
+    const response = await apiClient.post<RecextConsultationResponse['data']>(
+      '/api/form/external',
+      payload,
+    )
 
-  return data
+    return {
+      status: response.status,
+      statusText: response.statusText,
+      data: response.data,
+    }
+  } catch (error) {
+    const apiError = error as ApiError
+
+    throw {
+      status: apiError.status || undefined,
+      statusText: apiError.statusText,
+      data: apiError.details,
+      message: apiError.message,
+    }
+  }
 }
 
 export const getRegiones = async (): Promise<RegionDto[]> => {

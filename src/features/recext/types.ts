@@ -93,13 +93,26 @@ export type RecextJsonValue =
   | RecextJsonValue[]
   | { [key: string]: RecextJsonValue }
 
-export interface RecextConsultationResponse {
+export interface RecextConsultationBody {
   codigoPrev?: string
   data?: {
     urlPrevired?: string
     [key: string]: RecextJsonValue | undefined
   }
   [key: string]: RecextJsonValue | undefined
+}
+
+export interface RecextConsultationResponse {
+  status: number
+  statusText?: string
+  data: RecextConsultationBody
+}
+
+export interface RecextConsultationError {
+  status?: number
+  statusText?: string
+  data?: unknown
+  message: string
 }
 
 export interface RegionDto {
