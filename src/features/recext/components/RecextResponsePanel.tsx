@@ -1,5 +1,7 @@
+import type { RecextConsultationResponse } from '../types'
+
 interface RecextResponsePanelProps {
-  data?: unknown
+  data?: RecextConsultationResponse
   errorMessage?: string | null
   isLoading: boolean
   statusLabel: string
@@ -17,12 +19,71 @@ const formatJson = (value: unknown) => {
   }
 }
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+
+const getValidUrl = (value: unknown) => {
+  if (typeof value !== 'string') {
+    return null
+  }
+
+  try {
+    const url = new URL(value)
+
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : null
+  } catch {
+    return null
+  }
+}
+
+const findReturnUrl = (value: unknown): string | null => {
+  if (!isRecord(value)) {
+    return null
+  }
+
+  const documentedUrl = getValidUrl(value.data?.urlPrevired)
+
+  if (documentedUrl) {
+    return documentedUrl
+  }
+
+  for (const fieldName of ['urlPrevired', 'urlRetorno', 'returnUrl']) {
+    const url = getValidUrl(value[fieldName])
+
+    if (url) {
+      return url
+    }
+  }
+
+  for (const fieldValue of Object.values(value)) {
+    if (isRecord(fieldValue)) {
+      const url = findReturnUrl(fieldValue)
+
+      if (url) {
+        return url
+      }
+    }
+  }
+
+  return null
+}
+
 function RecextResponsePanel({
   data,
   errorMessage,
   isLoading,
   statusLabel,
 }: RecextResponsePanelProps) {
+  const returnUrl = findReturnUrl(data)
+
+  const handleOpenReturnUrl = () => {
+    if (!returnUrl) {
+      return
+    }
+
+    window.open(returnUrl, '_blank', 'noopener,noreferrer')
+  }
+
   return (
     <aside className="rounded-[1.2rem] bg-[#25232d] p-4 shadow-[0_18px_38px_rgba(0,0,0,0.16)] sm:p-5">
       <div className="mb-4 rounded-[1rem] bg-[#19181f] px-6 py-5">
@@ -46,6 +107,25 @@ function RecextResponsePanel({
           ) : null}
           {!isLoading && !errorMessage && data !== undefined ? (
             <p>Consulta ejecutada correctamente.</p>
+          ) : null}
+          {!isLoading && !errorMessage && returnUrl ? (
+            <div className="mt-5 rounded-[0.8rem] border border-[#34d5d0]/30 bg-[#111015] p-4">
+              <p className="mb-2 text-[0.85rem] font-semibold text-[#34d5d0]">
+                URL de retorno detectada
+              </p>
+              <input
+                className="mb-3 w-full rounded-[0.55rem] border border-white/10 bg-[#1b1a22] px-3 py-2 text-[0.85rem] text-[#f3f1e9] outline-none"
+                readOnly
+                value={returnUrl}
+              />
+              <button
+                className="rounded-[0.65rem] bg-[#f26f45] px-4 py-2 text-[0.9rem] font-semibold text-white transition hover:bg-[#ff825d] focus:outline-none focus:ring-2 focus:ring-[#34d5d0]"
+                onClick={handleOpenReturnUrl}
+                type="button"
+              >
+                Abrir URL de retorno
+              </button>
+            </div>
           ) : null}
         </div>
 

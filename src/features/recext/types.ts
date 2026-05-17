@@ -85,7 +85,22 @@ export interface ApiCollectionResponse<T> {
   results?: T[]
 }
 
-export type RecextConsultationResponse = unknown
+export type RecextJsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | RecextJsonValue[]
+  | { [key: string]: RecextJsonValue }
+
+export interface RecextConsultationResponse {
+  codigoPrev?: string
+  data?: {
+    urlPrevired?: string
+    [key: string]: RecextJsonValue | undefined
+  }
+  [key: string]: RecextJsonValue | undefined
+}
 
 export interface RegionDto {
   codRegion: number
