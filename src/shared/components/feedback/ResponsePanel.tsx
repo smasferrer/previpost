@@ -56,6 +56,7 @@ function ResponsePanel({
   title = 'Respuesta',
 }: ResponsePanelProps) {
   const formattedPayload = content ? '' : formatPayload(data)
+  const visibleContent = content ?? (formattedPayload || emptyMessage)
 
   return (
     <section
@@ -77,7 +78,7 @@ function ResponsePanel({
           Contenido
         </div>
         <pre className="min-h-48 overflow-auto whitespace-pre-wrap break-words p-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-          {content ?? formattedPayload || emptyMessage}
+          {visibleContent}
         </pre>
       </div>
     </section>

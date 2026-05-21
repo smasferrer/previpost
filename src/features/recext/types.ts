@@ -51,6 +51,7 @@ export const emptyRecextFormValues: RecextConsultationFormValues = {
   region: '',
 }
 
+// Fixture temporal de apoyo. La pantalla de ingreso manual usa emptyRecextFormValues.
 export const initialRecextFormValues: RecextConsultationFormValues = {
   rut: '23429289',
   dv: '7',
