@@ -29,29 +29,32 @@ function RecextFormSection({
   const isSubmitDisabled = !canSubmit || isSubmitting
 
   return (
-    <div className="min-h-[620px] rounded-[1.2rem] bg-[#1c1c1c] px-5 py-5 shadow-[0_18px_38px_rgba(0,0,0,0.16)] sm:px-8 sm:py-7">
+    <div className="min-h-[620px] rounded-[1.2rem] bg-[#1c1c1c] px-2.5 py-2.5 shadow-[0_18px_38px_rgba(0,0,0,0.16)] sm:px-4 sm:py-3.5">
       {showForm ? (
         <div>
           <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
+              <p className="text-[1.05rem] text-[#8b8a8f] sm:text-[1.1rem]">
+                Información obligatoria
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <button
-                className="mb-8 text-left text-[1.2rem] font-medium text-[#02d3ff] transition hover:text-[#6ee8ff] focus:outline-none focus:ring-2 focus:ring-[#02d3ff]/50 sm:text-[1.35rem]"
+                className="text-left text-[13px] font-medium text-[#02d3ff] transition hover:text-[#6ee8ff] focus:outline-none focus:ring-2 focus:ring-[#02d3ff]/50"
                 disabled={isSubmitting}
                 onClick={onPasteUserClick}
                 type="button"
               >
                 Pegar información de Usuario
               </button>
-              <p className="text-[1.05rem] text-[#8b8a8f] sm:text-[1.1rem]">
-                Información obligatoria
-              </p>
-            </div>
 
-            <RecextActionButton
-              disabled={isSubmitDisabled}
-              isLoading={isSubmitting}
-              onClick={onSubmit}
-            />
+              <RecextActionButton
+                disabled={isSubmitDisabled}
+                isLoading={isSubmitting}
+                onClick={onSubmit}
+              />
+            </div>
           </div>
 
           <div className="grid gap-x-7 gap-y-8 lg:grid-cols-3">
@@ -88,20 +91,24 @@ function RecextFormSection({
       ) : (
         <div className="flex min-h-[560px] flex-col">
           <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <button
-              className="text-left text-[1.8rem] font-medium text-[#292929] transition hover:text-[#02d3ff] focus:outline-none focus:ring-2 focus:ring-[#02d3ff]/50 sm:text-[2rem]"
-              disabled={isSubmitting}
-              onClick={onPasteUserClick}
-              type="button"
-            >
-              Pegar información de Usuario
-            </button>
+            <div />
 
-            <RecextActionButton
-              disabled={isSubmitDisabled}
-              isLoading={isSubmitting}
-              onClick={onSubmit}
-            />
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <button
+                className="text-left text-[13px] font-medium text-[#292929] transition hover:text-[#02d3ff] focus:outline-none focus:ring-2 focus:ring-[#02d3ff]/50"
+                disabled={isSubmitting}
+                onClick={onPasteUserClick}
+                type="button"
+              >
+                Pegar información de Usuario
+              </button>
+
+              <RecextActionButton
+                disabled={isSubmitDisabled}
+                isLoading={isSubmitting}
+                onClick={onSubmit}
+              />
+            </div>
           </div>
         </div>
       )}

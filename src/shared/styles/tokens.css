@@ -1,0 +1,82 @@
+:root {
+  --color-primary: #f79b63;
+  --color-primary-hover: #ffad78;
+  --color-primary-contrast: #1c1c1c;
+  --color-secondary: #00cde8;
+  --color-secondary-hover: #34d5d0;
+  --color-accent: #ffa06c;
+
+  --color-background: #1c1a22;
+  --color-background-muted: #19181f;
+  --color-surface: #25232d;
+  --color-surface-muted: #1b1a22;
+  --color-surface-strong: #111015;
+  --color-border: rgb(255 255 255 / 0.08);
+  --color-border-strong: rgb(255 255 255 / 0.16);
+
+  --color-text-primary: #f5f7fa;
+  --color-text-secondary: #c7c5cc;
+  --color-text-muted: #96959a;
+  --color-text-inverse: #171923;
+
+  --color-success: #8df0a0;
+  --color-success-surface: #112318;
+  --color-error: #ff9a82;
+  --color-error-surface: #2b1712;
+  --color-warning: #ffe08a;
+  --color-warning-surface: #292312;
+  --color-info: #7ce8ff;
+  --color-info-surface: #10242b;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.2rem;
+
+  --shadow-sm: 0 8px 18px rgb(0 0 0 / 0.14);
+  --shadow-md: 0 18px 38px rgb(0 0 0 / 0.16);
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+}
+
+[data-theme='light'] {
+  --color-primary: #f79b63;
+  --color-primary-hover: #ffad78;
+  --color-primary-contrast: #1c1c1c;
+  --color-secondary: #00cde8;
+  --color-secondary-hover: #34d5d0;
+  --color-accent: #ffa06c;
+
+  --color-background: #f7f8fb;
+  --color-background-muted: #eef2f6;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f4f6f8;
+  --color-surface-strong: #e7ebf0;
+  --color-border: #d6dde6;
+  --color-border-strong: #aab4c0;
+
+  --color-text-primary: #171923;
+  --color-text-secondary: #5d6675;
+  --color-text-muted: #7c8491;
+  --color-text-inverse: #f5f7fa;
+
+  --color-success: #22a06b;
+  --color-success-surface: #e8f7ef;
+  --color-error: #d04f3a;
+  --color-error-surface: #fdecea;
+  --color-warning: #b7791f;
+  --color-warning-surface: #fff4db;
+  --color-info: #0b84a5;
+  --color-info-surface: #e4f7fb;
+
+  --shadow-sm: 0 8px 18px rgb(15 23 42 / 0.08);
+  --shadow-md: 0 18px 38px rgb(15 23 42 / 0.12);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+}

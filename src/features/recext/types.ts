@@ -30,6 +30,27 @@ export interface RecextConsultationFormValues {
   region: string
 }
 
+export const emptyRecextFormValues: RecextConsultationFormValues = {
+  rut: '',
+  dv: '',
+  names: '',
+  paternalLastName: '',
+  maternalLastName: '',
+  email: '',
+  paymentType: '',
+  sex: '',
+  phone: '',
+  nationality: '',
+  returnUrl: '',
+  workerType: '',
+  taxRegime: '',
+  totalPayment: '',
+  fundsOrigin: '',
+  commune: '',
+  city: '',
+  region: '',
+}
+
 export const initialRecextFormValues: RecextConsultationFormValues = {
   rut: '23429289',
   dv: '7',
