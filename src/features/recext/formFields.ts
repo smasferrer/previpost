@@ -6,6 +6,7 @@ export interface RecextFieldConfig {
   placeholder: string
   type?: 'text' | 'select'
   fullWidth?: boolean
+  clearable?: boolean
 }
 
 export const mandatoryFields: RecextFieldConfig[] = [
@@ -42,12 +43,14 @@ export const optionalFields: RecextFieldConfig[] = [
     label: 'Tipo Trabajador',
     placeholder: 'Seleccione tipo trabajador',
     type: 'select',
+    clearable: true,
   },
   {
     name: 'taxRegime',
     label: 'Régimen Tributario',
     placeholder: 'Seleccione régimen tributario',
     type: 'select',
+    clearable: true,
   },
   { name: 'totalPayment', label: 'Total del Pago', placeholder: 'Ingrese monto a pagar' },
   {
@@ -55,13 +58,15 @@ export const optionalFields: RecextFieldConfig[] = [
     label: 'Origen de los Fondos',
     placeholder: 'Seleccione origen de fondos',
     type: 'select',
+    clearable: true,
   },
-  { name: 'region', label: 'Región', placeholder: 'Seleccione región', type: 'select' },
-  { name: 'city', label: 'Ciudad', placeholder: 'Seleccione ciudad', type: 'select' },
+  { name: 'region', label: 'Región', placeholder: 'Seleccione región', type: 'select', clearable: true },
+  { name: 'city', label: 'Ciudad', placeholder: 'Seleccione ciudad', type: 'select', clearable: true },
   {
     name: 'commune',
     label: 'Comuna',
     placeholder: 'Seleccione comuna',
     type: 'select',
+    clearable: true,
   },
 ]

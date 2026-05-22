@@ -15,6 +15,7 @@ function RecextInputField({
   placeholder,
   type = 'text',
   fullWidth = false,
+  clearable = false,
   options = [],
   value,
   error,
@@ -37,7 +38,7 @@ function RecextInputField({
             onChange={(event) => onChange(name, event.target.value)}
             className="w-full appearance-none bg-transparent pr-3.5 text-[1rem] italic text-[#6a666f] outline-none sm:text-[1.05rem]"
           >
-            <option value="" disabled>
+            <option value="" disabled={!clearable}>
               {placeholder}
             </option>
             {value && !options.some((option) => option.value === value) ? (
