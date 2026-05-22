@@ -10,6 +10,7 @@ import type {
   RecextConsultationRequest,
   RecextConsultationResponse,
   RegionDto,
+  RutValidationResponse,
 } from '../types'
 
 const fallbackAfpOptions: AfpOption[] = [
@@ -101,6 +102,15 @@ export const getComunasByCiudad = async (ciudad: string): Promise<ComunaDto[]> =
 export const getOrigenesAhorro = async (): Promise<OrigenAhorroDto[]> => {
   const { data } = await apiClient.get<OrigenAhorroDto[]>(
     apiPath('/origenes-ahorro'),
+  )
+
+  return data
+}
+
+export const validateRut = async (rut: string, dv: string): Promise<RutValidationResponse> => {
+  const { data } = await apiClient.get<RutValidationResponse>(
+    apiPath('/ruts-invalidos/validate'),
+    { params: { rut, dv } },
   )
 
   return data

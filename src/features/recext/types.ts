@@ -121,7 +121,6 @@ export interface RecextConsultationBody {
     urlPrevired?: string
     [key: string]: RecextJsonValue | undefined
   }
-  [key: string]: RecextJsonValue | undefined
 }
 
 export interface RecextConsultationResponse {
@@ -160,4 +159,8 @@ export interface OrigenAhorroDto {
   codOrigenAhorro: number
   glosa: string
   estado: number
+}
+
+export interface RutValidationResponse {
+  invalido: boolean
 }

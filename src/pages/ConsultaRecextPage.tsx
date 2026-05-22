@@ -20,7 +20,10 @@ import {
 } from '../features/recext/buildRecextRequest'
 import { mandatoryFields } from '../features/recext/formFields'
 import { useRecextAfpOptionsQuery } from '../features/recext/hooks/useRecextAfpOptionsQuery'
+import { useRutValidationQuery } from '../features/recext/hooks/useRutValidationQuery'
 import { parsePastedUserJson } from '../features/recext/parsePastedUserJson'
+import { validateRutMod11 } from '../features/recext/validateRutMod11'
+import { validateApellidoField, validateEmailField, validateNombreField, validateTelefonoField } from '../features/recext/validateFormFields'
 import {
   emptyRecextFormValues,
   type RecextConsultationRequest,
@@ -115,6 +118,12 @@ function ConsultaRecextPage() {
     emptyRecextFormValues,
   )
   const { data: afpOptions = [], isLoading, isError } = useRecextAfpOptionsQuery()
+  const hasRutAndDv = Boolean(formValues.rut.trim() && formValues.dv.trim())
+  const isRutMod11Valid = hasRutAndDv && validateRutMod11(formValues.rut, formValues.dv)
+  const rutValidation = useRutValidationQuery(
+    isRutMod11Valid ? formValues.rut : '',
+    isRutMod11Valid ? formValues.dv : '',
+  )
   const { data: regiones = [] } = useQuery({
     queryKey: ['recext', 'regiones'],
     queryFn: getRegiones,
@@ -145,11 +154,61 @@ function ConsultaRecextPage() {
   const hasMandatoryFields = mandatoryFields.every(({ name }) =>
     formValues[name].trim(),
   )
-  const canSubmit = showForm && hasMandatoryFields && isRecextAfpCode(afp)
+  const isRutFormatoInvalido = hasRutAndDv && !isRutMod11Valid
+  const isRutBloqueado = rutValidation.data?.invalido === true
+  const nombresError = validateNombreField(formValues.names)
+  const apellidoPaternoError = validateApellidoField(formValues.paternalLastName)
+  const apellidoMaternoError = validateApellidoField(formValues.maternalLastName)
+  const emailError = validateEmailField(formValues.email)
+  const telefonoError = validateTelefonoField(formValues.phone)
+  const fieldErrors: Partial<Record<keyof RecextConsultationFormValues, string>> = {}
+  if (isRutFormatoInvalido) fieldErrors.dv = 'El dígito verificador no corresponde al RUT ingresado.'
+  if (isRutBloqueado) fieldErrors.rut = 'Este RUT se encuentra bloqueado y no puede realizar la consulta.'
+  if (nombresError) fieldErrors.names = nombresError
+  if (apellidoPaternoError) fieldErrors.paternalLastName = apellidoPaternoError
+  if (apellidoMaternoError) fieldErrors.maternalLastName = apellidoMaternoError
+  if (emailError) fieldErrors.email = emailError
+  if (telefonoError) fieldErrors.phone = telefonoError
+  const errorsByField = fieldErrors
+  const canSubmit =
+    showForm &&
+    hasMandatoryFields &&
+    isRecextAfpCode(afp) &&
+    !isRutFormatoInvalido &&
+    !isRutBloqueado &&
+    !nombresError &&
+    !apellidoPaternoError &&
+    !apellidoMaternoError &&
+    !emailError &&
+    !telefonoError
   const optionsByField = {
+    paymentType: [
+      { value: 'APV', label: 'APV' },
+      { value: 'CUENTA2', label: 'CUENTA2' },
+    ],
+    sex: [
+      { value: 'M', label: 'Masculino' },
+      { value: 'F', label: 'Femenino' },
+    ],
+    nationality: [
+      { value: '0', label: 'Chileno' },
+      { value: '1', label: 'Extranjero' },
+    ],
+    workerType: [
+      { value: 'dependiente', label: 'Trabajador dependiente' },
+      { value: 'independiente', label: 'Trabajador independiente' },
+    ],
+    taxRegime: formValues.paymentType === 'APV'
+      ? [
+          { value: 'A', label: 'Régimen A' },
+          { value: 'B', label: 'Régimen B' },
+        ]
+      : formValues.paymentType === 'CUENTA2'
+        ? [{ value: 'G', label: 'Régimen General' }]
+        : [],
     fundsOrigin: origenesAhorro.map((origen) => ({
       value: String(origen.codOrigenAhorro),
-      label: `${origen.glosa} (${origen.codOrigenAhorro})`,
+      label: origen.glosa,
     })),
     region: regiones.map((region) => ({
       value: String(region.codRegion),
@@ -181,6 +240,7 @@ function ConsultaRecextPage() {
       [name]: value,
       ...(name === 'region' ? { city: '', commune: '' } : {}),
       ...(name === 'city' ? { commune: '' } : {}),
+      ...(name === 'paymentType' ? { taxRegime: '' } : {}),
     }))
   }
 
@@ -323,6 +383,7 @@ function ConsultaRecextPage() {
                 showForm={showForm}
                 values={formValues}
                 optionsByField={optionsByField}
+                errorsByField={errorsByField}
                 canSubmit={canSubmit}
                 isSubmitting={consultationMutation.isPending}
                 onFieldChange={handleFieldChange}
