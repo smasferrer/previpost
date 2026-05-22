@@ -9,6 +9,7 @@ interface RecextFormSectionProps {
   optionsByField?: Partial<
     Record<keyof RecextConsultationFormValues, SelectOption[]>
   >
+  errorsByField?: Partial<Record<keyof RecextConsultationFormValues, string>>
   canSubmit: boolean
   isSubmitting: boolean
   onFieldChange: (name: keyof RecextConsultationFormValues, value: string) => void
@@ -20,6 +21,7 @@ function RecextFormSection({
   showForm,
   values,
   optionsByField = {},
+  errorsByField = {},
   canSubmit,
   isSubmitting,
   onFieldChange,
@@ -64,6 +66,7 @@ function RecextFormSection({
                 {...field}
                 value={values[field.name]}
                 options={optionsByField[field.name]}
+                error={errorsByField[field.name]}
                 onChange={onFieldChange}
               />
             ))}

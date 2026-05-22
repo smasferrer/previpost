@@ -5,6 +5,7 @@ interface RecextInputFieldProps extends RecextFieldConfig {
   fullWidth?: boolean
   options?: SelectOption[]
   value: string
+  error?: string
   onChange: (name: keyof RecextConsultationFormValues, value: string) => void
 }
 
@@ -16,9 +17,11 @@ function RecextInputField({
   fullWidth = false,
   options = [],
   value,
+  error,
   onChange,
 }: RecextInputFieldProps) {
-  const labelColorClassName = value.trim() ? 'text-white' : 'text-[#E5E5E5]'
+  const labelColorClassName = error ? 'text-red-400' : value.trim() ? 'text-white' : 'text-[#E5E5E5]'
+  const borderClassName = error ? 'border-red-500' : 'border-[#f79b63]'
 
   if (type === 'select') {
     return (
@@ -28,7 +31,7 @@ function RecextInputField({
         >
           {label}
         </span>
-        <div className="relative border-b border-[#f79b63] pb-1">
+        <div className={`relative border-b ${borderClassName} pb-1`}>
           <select
             value={value}
             onChange={(event) => onChange(name, event.target.value)}
@@ -62,7 +65,7 @@ function RecextInputField({
       >
         {label}
       </span>
-      <div className="border-b border-[#f79b63] pb-1">
+      <div className={`border-b ${borderClassName} pb-1`}>
         <input
           type="text"
           value={value}
@@ -71,6 +74,9 @@ function RecextInputField({
           className="w-full bg-transparent text-[1rem] italic text-[#6a666f] outline-none placeholder:text-[#6a666f] sm:text-[1.05rem]"
         />
       </div>
+      {error ? (
+        <p className="mt-1 text-[0.8rem] text-red-400">{error}</p>
+      ) : null}
     </label>
   )
 }

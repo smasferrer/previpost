@@ -2,6 +2,7 @@ import type {
   RecextConsultationError,
   RecextConsultationResponse,
 } from '../types'
+import { CODIGOS_PREV } from '../codigosPrev'
 
 interface RecextResponsePanelProps {
   error?: RecextConsultationError | null
@@ -87,7 +88,7 @@ const findReturnUrl = (value: unknown): string | null => {
     return null
   }
 
-  const documentedUrl = getValidUrl(value.data?.urlPrevired)
+  const documentedUrl = getValidUrl(isRecord(value.data) ? value.data.urlPrevired : undefined)
 
   if (documentedUrl) {
     return documentedUrl
@@ -186,6 +187,12 @@ function RecextResponsePanel({
     ? buildStatusClassName(undefined, undefined)
     : buildStatusClassName(response, error)
 
+  const codigoPrev =
+    response?.data?.codigoPrev ??
+    (isRecord(error?.data) ? (error.data as Record<string, unknown>).codigoPrev : undefined)
+  const codigoPrevStr = typeof codigoPrev === 'string' && codigoPrev.trim() ? codigoPrev.trim() : null
+  const codigoPrevInfo = codigoPrevStr ? (CODIGOS_PREV[codigoPrevStr] ?? null) : null
+
   const handleOpenReturnUrl = () => {
     if (!returnUrl) {
       return
@@ -249,6 +256,33 @@ function RecextResponsePanel({
             >
               Abrir URL de retorno
             </button>
+          </div>
+        ) : null}
+        {!isLoading && codigoPrevStr ? (
+          <div className="mt-4 rounded-[0.8rem] border border-[#f79b63]/30 bg-[#111015] p-3">
+            <p className="mb-3 text-[0.85rem] font-semibold text-[#f79b63]">
+              Código de respuesta Previred
+            </p>
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-baseline gap-x-2">
+                <span className="shrink-0 text-[0.8rem] text-[#96959a]">Código de Error:</span>
+                <span className="font-mono text-[0.95rem] font-bold text-[#f79b63]">
+                  {codigoPrevStr}
+                </span>
+              </div>
+              {codigoPrevInfo ? (
+                <>
+                  <div className="flex flex-wrap items-baseline gap-x-2">
+                    <span className="shrink-0 text-[0.8rem] text-[#96959a]">Motivo del Error:</span>
+                    <span className="text-[0.85rem] text-[#f3f1e9]">{codigoPrevInfo.motivo}</span>
+                  </div>
+                  <div className="flex flex-wrap items-baseline gap-x-2">
+                    <span className="shrink-0 text-[0.8rem] text-[#96959a]">Descripción:</span>
+                    <span className="text-[0.85rem] text-[#f3f1e9]">{codigoPrevInfo.descripcion}</span>
+                  </div>
+                </>
+              ) : null}
+            </div>
           </div>
         ) : null}
       </div>
