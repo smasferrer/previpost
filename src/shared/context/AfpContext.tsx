@@ -18,7 +18,7 @@ const getStoredAfp = () => {
   return window.localStorage.getItem(storageKey) ?? ''
 }
 
-function AfpProvider({ children }: PropsWithChildren) {
+export function AfpProvider({ children }: PropsWithChildren) {
   const [afp, setAfpState] = useState(getStoredAfp)
   const {
     data: afpOptions = [],
@@ -66,5 +66,3 @@ function AfpProvider({ children }: PropsWithChildren) {
 
   return <AfpContext.Provider value={value}>{children}</AfpContext.Provider>
 }
-
-export default AfpProvider

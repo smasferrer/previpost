@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react'
-import AfpProvider from '../../context/AfpContext'
+import { AfpProvider } from '../../context/AfpContext'
 import ThemeProvider from '../../theme/ThemeContext'
 import AppSidebar from './AppSidebar'
 import AppTopbar from './AppTopbar'
