@@ -21,7 +21,7 @@ import {
   buildConsultaTransaccionesDiaRequest,
 } from '../features/api-consultas/utils/buildApiConsultasPayload'
 import PageHeader from '../shared/components/layout/PageHeader'
-import { useAfpContext } from '../shared/context/useAfpContext'
+import { useAfpContext } from '../shared/context/AfpContext'
 
 type ApiConsultasErrors = Partial<Record<ApiConsultasType, string>>
 

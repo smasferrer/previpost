@@ -27,7 +27,7 @@ import {
   type RecextConsultationFormValues,
   type RecextConsultationResponse,
 } from '../features/recext/types'
-import { useAfpContext } from '../shared/context/useAfpContext'
+import { useAfpContext } from '../shared/context/AfpContext'
 
 type RecextConsultationMode = 'json' | 'manual'
 

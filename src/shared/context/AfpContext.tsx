@@ -1,12 +1,25 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
+  createContext,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
   type PropsWithChildren,
 } from 'react'
 import { useRecextAfpOptionsQuery } from '../../features/recext/hooks/useRecextAfpOptionsQuery'
-import { AfpContext } from './afpContext'
+import type { AfpOption } from '../../features/recext/types'
+
+export interface AfpContextValue {
+  afp: string
+  afpOptions: AfpOption[]
+  isAfpError: boolean
+  isLoadingAfps: boolean
+  setAfp: (value: string) => void
+}
+
+export const AfpContext = createContext<AfpContextValue | null>(null)
 
 const storageKey = 'previpost:selected-afp'
 
@@ -65,4 +78,14 @@ export function AfpProvider({ children }: PropsWithChildren) {
   )
 
   return <AfpContext.Provider value={value}>{children}</AfpContext.Provider>
+}
+
+export const useAfpContext = () => {
+  const context = useContext(AfpContext)
+
+  if (!context) {
+    throw new Error('useAfpContext debe usarse dentro de AfpProvider.')
+  }
+
+  return context
 }
