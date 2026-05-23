@@ -5,7 +5,7 @@ import {
   useState,
   type PropsWithChildren,
 } from 'react'
-import { ThemeContext } from './themeContext'
+import { ThemeContext } from './ThemeContext'
 import {
   defaultThemeId,
   isThemeId,
