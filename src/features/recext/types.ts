@@ -74,10 +74,6 @@ export const initialRecextFormValues: RecextConsultationFormValues = {
 }
 
 export interface RecextConsultationRequest {
-  login: {
-    rutAfp: string
-    password: string
-  }
   datosCliente: {
     afp: RecextAfpCode
     rut: string

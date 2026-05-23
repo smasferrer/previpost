@@ -24,7 +24,7 @@ function ConsultaRutForm({
             Consulta por RUT
           </h2>
           <p className="mt-1 text-[0.95rem] text-[#96959a]">
-            Ingresa el RUT para preparar la consulta.
+            Ingresa el RUT sin puntos, guión ni dígito verificador para preparar la consulta.
           </p>
         </div>
         <Button isLoading={isSubmitting} loadingLabel="Preparando..." onClick={onSubmit}>
@@ -39,7 +39,7 @@ function ConsultaRutForm({
         <input
           className="w-full rounded-[0.75rem] border border-white/10 bg-[#111015] px-3 py-2 text-[1rem] text-[#f3f1e9] outline-none transition placeholder:text-[#6a666f] focus:border-[#02d3ff] focus:ring-2 focus:ring-[#02d3ff]/30"
           onChange={(event) => onRutChange(event.target.value)}
-          placeholder="Ej: 12345678-9"
+          placeholder="Ej: 12345678"
           type="text"
           value={rut}
         />
