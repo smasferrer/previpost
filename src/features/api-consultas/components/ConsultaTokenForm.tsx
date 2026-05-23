@@ -18,13 +18,13 @@ function ConsultaTokenForm({
   token,
 }: ConsultaTokenFormProps) {
   return (
-    <Card as="section" className="border-white/5 bg-[#1c1c1c]">
+    <Card as="section" className="border-[var(--app-border)] bg-[var(--app-surface)]">
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h2 className="text-[1.25rem] font-semibold text-[#f3f1e9]">
+          <h2 className="text-[1.25rem] font-semibold text-[var(--app-text)]">
             Consulta por token
           </h2>
-          <p className="mt-1 text-[0.95rem] text-[#96959a]">
+          <p className="mt-1 text-[0.95rem] text-[var(--app-text-muted)]">
             Ingresa el token asociado a la consulta.
           </p>
         </div>
@@ -34,7 +34,7 @@ function ConsultaTokenForm({
       </div>
 
       <Textarea
-        className="min-h-[180px] border-white/10 bg-[#111015] font-mono text-[#f3f1e9]"
+        className="min-h-[180px] border-[var(--app-input-border)] bg-[var(--app-input-bg)] font-mono text-[var(--app-input-text)]"
         error={errorMessage ?? undefined}
         label="Token"
         onChange={(event) => onTokenChange(event.target.value)}

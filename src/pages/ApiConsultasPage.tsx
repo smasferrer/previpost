@@ -1,6 +1,5 @@
-import { Link, useNavigate } from 'react-router'
 import { useState } from 'react'
-import logo from '../assets/img/logo.svg'
+import { useSearchParams } from 'react-router'
 import {
   executeConsultaRut,
   executeConsultaToken,
@@ -11,7 +10,6 @@ import ApiConsultasTypeSelector from '../features/api-consultas/components/ApiCo
 import ConsultaRutForm from '../features/api-consultas/components/ConsultaRutForm'
 import ConsultaTokenForm from '../features/api-consultas/components/ConsultaTokenForm'
 import ConsultaTransaccionesDiaForm from '../features/api-consultas/components/ConsultaTransaccionesDiaForm'
-import { useRecextAfpOptionsQuery } from '../features/recext/hooks/useRecextAfpOptionsQuery'
 import type {
   ApiConsultaResponse,
   ApiConsultasStatus,
@@ -22,16 +20,23 @@ import {
   buildConsultaTokenRequest,
   buildConsultaTransaccionesDiaRequest,
 } from '../features/api-consultas/utils/buildApiConsultasPayload'
-import { appPaths } from '../router/paths'
 import PageHeader from '../shared/components/layout/PageHeader'
-import Card from '../shared/components/ui/Card'
+import { useAfpContext } from '../shared/context/useAfpContext'
 
 type ApiConsultasErrors = Partial<Record<ApiConsultasType, string>>
 
+const getApiConsultasType = (value: string | null): ApiConsultasType | null => {
+  if (value === 'rut' || value === 'transacciones-dia' || value === 'token') {
+    return value
+  }
+
+  return null
+}
+
 function ApiConsultasPage() {
-  const navigate = useNavigate()
-  const [afp, setAfp] = useState('')
-  const [selectedType, setSelectedType] = useState<ApiConsultasType>('rut')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const selectedType = getApiConsultasType(searchParams.get('tipo')) ?? 'rut'
+  const { afp } = useAfpContext()
   const [rut, setRut] = useState('')
   const [fecha, setFecha] = useState('')
   const [token, setToken] = useState('')
@@ -39,12 +44,6 @@ function ApiConsultasPage() {
   const [afpErrorMessage, setAfpErrorMessage] = useState<string | null>(null)
   const [responseStatus, setResponseStatus] = useState<ApiConsultasStatus>('idle')
   const [responseData, setResponseData] = useState<ApiConsultaResponse>()
-  // TODO: Mover la carga de AFP a una capa compartida si API Consultas y Rec. Externa la siguen usando.
-  const {
-    data: afpOptions = [],
-    isLoading: isLoadingAfps,
-    isError: isAfpError,
-  } = useRecextAfpOptionsQuery()
 
   const setFieldError = (message: string) => {
     setErrors((currentErrors) => ({
@@ -63,9 +62,9 @@ function ApiConsultasPage() {
   }
 
   const handleTypeChange = (type: ApiConsultasType) => {
-    setSelectedType(type)
     setResponseStatus('idle')
     setResponseData(undefined)
+    setSearchParams({ tipo: type })
   }
 
   const handleSubmit = async () => {
@@ -140,88 +139,21 @@ function ApiConsultasPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#1c1a22] px-2 py-3 text-[#f3f1e9] sm:px-3 lg:px-4">
-      <div className="mx-auto max-w-[1920px]">
-        <Link to={appPaths.home}>
-          <img src={logo} alt="PreviPost" className="mb-5 w-[126px] sm:w-[154px]" />
-        </Link>
-
-        <div className="grid gap-5 xl:grid-cols-[7fr_3fr]">
+    <div className="text-[var(--app-text)]">
+      <div>
+        <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
           <section className="space-y-5">
-            <Card className="border-white/5 bg-[#281b12]">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-[0.9rem] border border-[#f79b63] bg-[#4b2a17] px-3 py-2">
-                  <span className="mb-2 block text-[1rem] font-medium text-[#f79b63] sm:text-[1.1rem]">
-                    Consulta seleccionada
-                  </span>
-                  <div className="relative border-b border-[#f79b63] pb-1">
-                    <select
-                      value="api"
-                      onChange={(event) => {
-                        if (event.target.value === 'recext') {
-                          navigate(appPaths.consultaRecext)
-                        }
-                      }}
-                      className="w-full appearance-none bg-transparent pr-3.5 text-[1rem] text-[#f3f1e9] outline-none sm:text-[1.05rem]"
-                    >
-                      <option value="recext">Consulta Rec. Externa</option>
-                      <option value="api">API Consultas</option>
-                    </select>
-                    <span className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-[0.8rem] text-[#f3f1e9]">
-                      ▼
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
             <PageHeader
               description="Selecciona el tipo de consulta, completa los datos mínimos y ejecuta la llamada al backend."
               eyebrow="Servicio"
               title="API Consultas"
             />
 
-            <Card as="section" className="border-white/5 bg-[#1c1c1c]">
-              <label className="block max-w-xl">
-                <span className="mb-2 block text-[0.9rem] font-semibold text-[#f79b63]">
-                  AFP
-                </span>
-                <div className="relative rounded-[0.75rem] border border-white/10 bg-[#111015] px-3 py-2">
-                  <select
-                    className={`w-full appearance-none bg-transparent pr-6 text-[1rem] outline-none ${
-                      afp ? 'text-[#f3f1e9]' : 'text-[#6a666f]'
-                    }`}
-                    onChange={(event) => {
-                      setAfp(event.target.value)
-                      setAfpErrorMessage(null)
-                    }}
-                    value={afp}
-                  >
-                    <option value="" disabled>
-                      {isLoadingAfps
-                        ? 'Cargando AFP...'
-                        : isAfpError
-                          ? 'No fue posible cargar AFP'
-                          : 'Seleccione AFP a consultar'}
-                    </option>
-                    {afpOptions.map((item) => (
-                      <option key={item.value} value={item.value}>
-                        {item.label}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[0.8rem] text-[#f3f1e9]">
-                    ▼
-                  </span>
-                </div>
-              </label>
-
-              {afpErrorMessage ? (
-                <p className="mt-3 rounded-[0.75rem] border border-[#f79b63]/40 bg-[#2b1712] px-3 py-2 text-[0.9rem] text-[#ffb28b]">
-                  {afpErrorMessage}
-                </p>
-              ) : null}
-            </Card>
+            {afpErrorMessage ? (
+              <p className="rounded-[0.75rem] border border-[var(--app-error)] bg-[var(--app-error-surface)] px-3 py-2 text-[0.9rem] text-[var(--app-error)]">
+                {afpErrorMessage}
+              </p>
+            ) : null}
 
             <ApiConsultasTypeSelector
               selectedType={selectedType}
@@ -274,7 +206,7 @@ function ApiConsultasPage() {
           />
         </div>
       </div>
-    </main>
+    </div>
   )
 }
 

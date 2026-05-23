@@ -24,18 +24,18 @@ function RecextJsonConsultationSection({
   return (
     <Card
       as="section"
-      className="min-h-[620px] border-white/5 bg-[#1c1c1c] px-2.5 py-3 sm:px-4 sm:py-4"
+      className="min-h-[620px] border-[var(--app-border)] bg-[var(--app-surface)] px-2.5 py-3 sm:px-4 sm:py-4"
     >
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h2 className="text-[1.25rem] font-semibold text-[#f3f1e9]">
+          <h2 className="text-[1.25rem] font-semibold text-[var(--app-text)]">
             Pegar JSON
           </h2>
-          <p className="mt-1 max-w-2xl text-[0.95rem] text-[#96959a]">
+          <p className="mt-1 max-w-2xl text-[0.95rem] text-[var(--app-text-muted)]">
             Pega la información del usuario y ejecuta la consulta sin completar
             el formulario manual.
           </p>
-          <p className="mt-2 max-w-2xl rounded-[0.75rem] border border-[#02d3ff]/20 bg-[#10242b] px-3 py-2 text-[0.9rem] text-[#7ce8ff]">
+          <p className="mt-2 max-w-2xl rounded-[0.75rem] border border-[var(--app-accent)] bg-[var(--app-info-surface)] px-3 py-2 text-[0.9rem] text-[var(--app-info)]">
             La AFP seleccionada se usa para construir la consulta y aplicar sus
             credenciales asociadas.
           </p>
@@ -53,7 +53,7 @@ function RecextJsonConsultationSection({
       </div>
 
       <Textarea
-        className="min-h-[420px] resize-y border-white/10 bg-[#111015] font-mono text-[0.95rem] leading-relaxed text-[#ffa36f]"
+        className="min-h-[420px] resize-y border-[var(--app-input-border)] bg-[var(--app-input-bg)] font-mono text-[0.95rem] leading-relaxed text-[var(--app-json-value)]"
         error={errorMessage ?? undefined}
         label="Información del usuario"
         onChange={(event) => onJsonTextChange(event.target.value)}
@@ -62,7 +62,7 @@ function RecextJsonConsultationSection({
       />
 
       {!hasSelectedAfp ? (
-        <p className="mt-3 rounded-[0.75rem] border border-[#ffe08a]/30 bg-[#292312] px-3 py-2 text-[0.9rem] text-[#ffe08a]">
+        <p className="mt-3 rounded-[0.75rem] border border-[var(--app-warning)] bg-[var(--app-warning-surface)] px-3 py-2 text-[0.9rem] text-[var(--app-warning)]">
           Selecciona una AFP en el paso 1 para habilitar la ejecución.
         </p>
       ) : null}

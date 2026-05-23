@@ -19,7 +19,7 @@ function ApiConsultasResponsePanel({
 }: ApiConsultasResponsePanelProps) {
   return (
     <ResponsePanel
-      className="min-h-[360px] border border-white/5 bg-[#25232d]"
+      className="min-h-[360px] min-w-0 max-w-full border border-[var(--app-border)] bg-[var(--app-surface)]"
       data={data}
       emptyMessage="Selecciona un tipo de consulta y completa el formulario para ejecutar la consulta."
       status={status}

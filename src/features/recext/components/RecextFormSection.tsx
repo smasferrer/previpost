@@ -31,19 +31,19 @@ function RecextFormSection({
   const isSubmitDisabled = !canSubmit || isSubmitting
 
   return (
-    <div className="min-h-[620px] rounded-[1.2rem] bg-[#1c1c1c] px-2.5 py-2.5 shadow-[0_18px_38px_rgba(0,0,0,0.16)] sm:px-4 sm:py-3.5">
+    <div className="min-h-[620px] rounded-[1.2rem] bg-[var(--app-surface)] px-2.5 py-2.5 shadow-[var(--shadow-md)] sm:px-4 sm:py-3.5">
       {showForm ? (
         <div>
           <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-[1.05rem] text-[#8b8a8f] sm:text-[1.1rem]">
+              <p className="text-[1.05rem] text-[var(--app-text-muted)] sm:text-[1.1rem]">
                 Información obligatoria
               </p>
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <button
-                className="text-left text-[13px] font-medium text-[#02d3ff] transition hover:text-[#6ee8ff] focus:outline-none focus:ring-2 focus:ring-[#02d3ff]/50"
+                className="text-left text-[13px] font-medium text-[var(--app-accent)] transition hover:text-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)]"
                 disabled={isSubmitting}
                 onClick={onPasteUserClick}
                 type="button"
@@ -73,7 +73,7 @@ function RecextFormSection({
           </div>
 
           <div className="mt-12">
-            <p className="mb-8 text-[1.05rem] text-[#8b8a8f] sm:text-[1.1rem]">
+            <p className="mb-8 text-[1.05rem] text-[var(--app-text-muted)] sm:text-[1.1rem]">
               Información opcional
             </p>
 
@@ -98,7 +98,7 @@ function RecextFormSection({
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <button
-                className="text-left text-[13px] font-medium text-[#292929] transition hover:text-[#02d3ff] focus:outline-none focus:ring-2 focus:ring-[#02d3ff]/50"
+                className="text-left text-[13px] font-medium text-[var(--app-text-muted)] transition hover:text-[var(--app-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)]"
                 disabled={isSubmitting}
                 onClick={onPasteUserClick}
                 type="button"

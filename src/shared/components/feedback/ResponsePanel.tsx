@@ -60,10 +60,10 @@ function ResponsePanel({
 
   return (
     <section
-      className={`rounded-[var(--radius-lg)] bg-[var(--color-surface)] p-3 shadow-[var(--shadow-md)] ${className}`}
+      className={`min-w-0 max-w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-surface)] p-3 shadow-[var(--shadow-md)] ${className}`}
     >
       <div className="mb-3 flex min-w-0 items-center justify-between gap-3">
-        <h2 className="text-base font-semibold text-[var(--color-text-secondary)]">
+        <h2 className="min-w-0 truncate text-base font-semibold text-[var(--color-text-secondary)]">
           {title}
         </h2>
         <span
@@ -73,11 +73,11 @@ function ResponsePanel({
         </span>
       </div>
 
-      <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-strong)]">
+      <div className="min-w-0 max-w-full overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-strong)]">
         <div className="border-b border-[var(--color-border)] px-3 py-2 text-xs font-semibold text-[var(--color-text-muted)]">
           Contenido
         </div>
-        <pre className="min-h-48 overflow-auto whitespace-pre-wrap break-words p-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+        <pre className="max-w-full overflow-auto whitespace-pre-wrap break-words p-3 text-sm leading-relaxed text-[var(--color-text-secondary)] [overflow-wrap:anywhere]">
           {visibleContent}
         </pre>
       </div>

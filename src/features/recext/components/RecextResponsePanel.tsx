@@ -43,12 +43,12 @@ const renderJsonWithColors = (jsonText: string) => {
 
     const [token, key, stringValue, numberValue, literalValue, bracket] = match
     const colorClassName = bracket
-      ? 'text-[#00CDE8]'
+      ? 'text-[var(--app-json-punctuation)]'
       : key
-        ? 'text-white'
+        ? 'text-[var(--app-json-key)]'
         : stringValue || numberValue || literalValue
-          ? 'text-[#FFA06C]'
-          : 'text-[#96959a]'
+          ? 'text-[var(--app-json-value)]'
+          : 'text-[var(--app-text-muted)]'
 
     parts.push(
       <span className={colorClassName} key={`${matchIndex}-${token}`}>
@@ -140,16 +140,16 @@ const buildStatusClassName = (
   error: RecextConsultationError | null | undefined,
 ) => {
   if (response) {
-    return 'border-[#65d47a]/40 bg-[#112318] text-[#8df0a0]'
+    return 'border-[var(--app-success)] bg-[var(--app-success-surface)] text-[var(--app-success)]'
   }
 
   if (error) {
     return error.status
-      ? 'border-[#f79b63]/40 bg-[#2b1712] text-[#ffb28b]'
-      : 'border-[#f7d263]/40 bg-[#292312] text-[#ffe08a]'
+      ? 'border-[var(--app-error)] bg-[var(--app-error-surface)] text-[var(--app-error)]'
+      : 'border-[var(--app-warning)] bg-[var(--app-warning-surface)] text-[var(--app-warning)]'
   }
 
-  return 'border-white/5 bg-[#111015] text-[#96959a]'
+  return 'border-[var(--app-border)] bg-[var(--app-panel)] text-[var(--app-text-muted)]'
 }
 
 const getVisiblePayload = (
@@ -202,17 +202,17 @@ function RecextResponsePanel({
   }
 
   return (
-    <aside className="min-w-0 rounded-[1.2rem] bg-[#25232d] p-2 shadow-[0_18px_38px_rgba(0,0,0,0.16)] sm:p-2.5">
-      <div className="mb-4 rounded-[1rem] bg-[#19181f] px-3 py-2.5">
-        <h3 className="mb-3 text-[1rem] font-semibold text-[#96959a] sm:text-[1.05rem]">
+    <aside className="min-w-0 rounded-[1.2rem] bg-[var(--app-surface)] p-2 shadow-[var(--shadow-md)] sm:p-2.5">
+      <div className="mb-4 rounded-[1rem] bg-[var(--app-panel)] px-3 py-2.5">
+        <h3 className="mb-3 text-[1rem] font-semibold text-[var(--app-text-muted)] sm:text-[1.05rem]">
           Usuario
         </h3>
-        <p className="text-[1rem] font-semibold text-[#96959a] sm:text-[1.05rem]">
+        <p className="text-[1rem] font-semibold text-[var(--app-text-muted)] sm:text-[1.05rem]">
           Ultimos registros:
         </p>
       </div>
 
-      <div className="rounded-[1rem] bg-[#1b1a22] p-2">
+      <div className="rounded-[1rem] bg-[var(--app-surface-muted)] p-2">
         <div
           className={`mb-4 flex min-w-0 items-center justify-between gap-3 rounded-[0.8rem] border px-3 py-1.5 text-[1rem] font-semibold sm:text-[1.05rem] ${statusClassName}`}
         >
@@ -220,37 +220,37 @@ function RecextResponsePanel({
           <span className="min-w-0 truncate text-right">{visibleStatusCode}</span>
         </div>
 
-        <div className="mt-4 min-w-0 overflow-hidden rounded-[0.95rem] bg-[#111015]">
-          <div className="border-b border-white/5 px-2.5 py-1 text-[0.9rem] font-semibold text-[#96959a]">
+        <div className="mt-4 min-w-0 overflow-hidden rounded-[0.95rem] bg-[var(--app-panel)]">
+          <div className="border-b border-[var(--app-border)] px-2.5 py-1 text-[0.9rem] font-semibold text-[var(--app-text-muted)]">
             Json
           </div>
-          <pre className="line-clamp-[12] max-h-[300px] min-h-[258px] overflow-hidden whitespace-pre-wrap break-all bg-[#1b1a22] p-2.5 text-[0.85rem] leading-relaxed text-[#96959a]">
+          <pre className="line-clamp-[12] max-h-[300px] min-h-[258px] overflow-hidden whitespace-pre-wrap break-all bg-[var(--app-json-bg)] p-2.5 text-[0.85rem] leading-relaxed text-[var(--app-text-muted)]">
             {renderJsonWithColors(visibleJson)}
           </pre>
         </div>
 
         {isLoading ? (
-          <p className="mt-4 rounded-[0.95rem] bg-[#1b1a22] p-2.5 text-[0.95rem] text-[#96959a]">
+          <p className="mt-4 rounded-[0.95rem] bg-[var(--app-surface-muted)] p-2.5 text-[0.95rem] text-[var(--app-text-muted)]">
             Consultando backend...
           </p>
         ) : null}
         {!isLoading && error ? (
-          <p className="mt-4 rounded-[0.95rem] bg-[#1b1a22] p-2.5 text-[0.95rem] text-[#f79b63]">
+          <p className="mt-4 rounded-[0.95rem] bg-[var(--app-error-surface)] p-2.5 text-[0.95rem] text-[var(--app-error)]">
             {error.message || 'No fue posible ejecutar la consulta.'}
           </p>
         ) : null}
         {!isLoading && !error && returnUrl ? (
-          <div className="mt-4 rounded-[0.8rem] border border-[#34d5d0]/30 bg-[#111015] p-2">
-            <p className="mb-2 text-[0.85rem] font-semibold text-[#34d5d0]">
+          <div className="mt-4 rounded-[0.8rem] border border-[var(--app-accent)] bg-[var(--app-panel)] p-2">
+            <p className="mb-2 text-[0.85rem] font-semibold text-[var(--app-accent)]">
               URL de retorno detectada
             </p>
             <input
-              className="mb-3 w-full rounded-[0.55rem] border border-white/10 bg-[#1b1a22] px-1.5 py-1 text-[0.85rem] text-[#f3f1e9] outline-none"
+              className="mb-3 w-full rounded-[0.55rem] border border-[var(--app-input-border)] bg-[var(--app-input-bg)] px-1.5 py-1 text-[0.85rem] text-[var(--app-input-text)] outline-none"
               readOnly
               value={returnUrl}
             />
             <button
-              className="rounded-[0.65rem] bg-[#f26f45] px-2 py-1 text-[0.9rem] font-semibold text-white transition hover:bg-[#ff825d] focus:outline-none focus:ring-2 focus:ring-[#34d5d0]"
+              className="rounded-[var(--radius-sm)] bg-[var(--app-primary)] px-2 py-1 text-[0.9rem] font-semibold text-[var(--app-primary-contrast)] transition hover:bg-[var(--app-primary-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)]"
               onClick={handleOpenReturnUrl}
               type="button"
             >
@@ -259,26 +259,26 @@ function RecextResponsePanel({
           </div>
         ) : null}
         {!isLoading && codigoPrevStr ? (
-          <div className="mt-4 rounded-[0.8rem] border border-[#f79b63]/30 bg-[#111015] p-3">
-            <p className="mb-3 text-[0.85rem] font-semibold text-[#f79b63]">
+          <div className="mt-4 rounded-[0.8rem] border border-[var(--app-primary)] bg-[var(--app-panel)] p-3">
+            <p className="mb-3 text-[0.85rem] font-semibold text-[var(--app-primary)]">
               Código de respuesta Previred
             </p>
             <div className="space-y-2">
               <div className="flex flex-wrap items-baseline gap-x-2">
-                <span className="shrink-0 text-[0.8rem] text-[#96959a]">Código de Error:</span>
-                <span className="font-mono text-[0.95rem] font-bold text-[#f79b63]">
+                <span className="shrink-0 text-[0.8rem] text-[var(--app-text-muted)]">Código de Error:</span>
+                <span className="font-mono text-[0.95rem] font-bold text-[var(--app-primary)]">
                   {codigoPrevStr}
                 </span>
               </div>
               {codigoPrevInfo ? (
                 <>
                   <div className="flex flex-wrap items-baseline gap-x-2">
-                    <span className="shrink-0 text-[0.8rem] text-[#96959a]">Motivo del Error:</span>
-                    <span className="text-[0.85rem] text-[#f3f1e9]">{codigoPrevInfo.motivo}</span>
+                    <span className="shrink-0 text-[0.8rem] text-[var(--app-text-muted)]">Motivo del Error:</span>
+                    <span className="text-[0.85rem] text-[var(--app-text)]">{codigoPrevInfo.motivo}</span>
                   </div>
                   <div className="flex flex-wrap items-baseline gap-x-2">
-                    <span className="shrink-0 text-[0.8rem] text-[#96959a]">Descripción:</span>
-                    <span className="text-[0.85rem] text-[#f3f1e9]">{codigoPrevInfo.descripcion}</span>
+                    <span className="shrink-0 text-[0.8rem] text-[var(--app-text-muted)]">Descripción:</span>
+                    <span className="text-[0.85rem] text-[var(--app-text)]">{codigoPrevInfo.descripcion}</span>
                   </div>
                 </>
               ) : null}

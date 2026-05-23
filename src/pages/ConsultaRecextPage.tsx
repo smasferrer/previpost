@@ -1,12 +1,9 @@
 import { useState } from 'react'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useNavigate } from 'react-router'
 import RecextFormSection from '../features/recext/components/RecextFormSection'
 import RecextJsonConsultationSection from '../features/recext/components/RecextJsonConsultationSection'
-import RecextPageHeader from '../features/recext/components/RecextPageHeader'
 import RecextPasteUserModal from '../features/recext/components/RecextPasteUserModal'
 import RecextResponsePanel from '../features/recext/components/RecextResponsePanel'
-import RecextToolbar from '../features/recext/components/RecextToolbar'
 import {
   getCiudadesByRegion,
   getComunasByCiudad,
@@ -19,7 +16,6 @@ import {
   isRecextAfpCode,
 } from '../features/recext/buildRecextRequest'
 import { mandatoryFields } from '../features/recext/formFields'
-import { useRecextAfpOptionsQuery } from '../features/recext/hooks/useRecextAfpOptionsQuery'
 import { useRutValidationQuery } from '../features/recext/hooks/useRutValidationQuery'
 import { parsePastedUserJson } from '../features/recext/parsePastedUserJson'
 import { validateRutMod11 } from '../features/recext/validateRutMod11'
@@ -31,7 +27,7 @@ import {
   type RecextConsultationFormValues,
   type RecextConsultationResponse,
 } from '../features/recext/types'
-import { appPaths } from '../router/paths'
+import { useAfpContext } from '../shared/context/useAfpContext'
 
 type RecextConsultationMode = 'json' | 'manual'
 
@@ -107,8 +103,7 @@ const mapPastedUserToFormValues = (
 })
 
 function ConsultaRecextPage() {
-  const navigate = useNavigate()
-  const [afp, setAfp] = useState('')
+  const { afp } = useAfpContext()
   const [consultationMode, setConsultationMode] =
     useState<RecextConsultationMode>('json')
   const [isPasteModalOpen, setIsPasteModalOpen] = useState(false)
@@ -117,7 +112,6 @@ function ConsultaRecextPage() {
   const [formValues, setFormValues] = useState<RecextConsultationFormValues>(
     emptyRecextFormValues,
   )
-  const { data: afpOptions = [], isLoading, isError } = useRecextAfpOptionsQuery()
   const hasRutAndDv = Boolean(formValues.rut.trim() && formValues.dv.trim())
   const isRutMod11Valid = hasRutAndDv && validateRutMod11(formValues.rut, formValues.dv)
   const rutValidation = useRutValidationQuery(
@@ -308,35 +302,24 @@ function ConsultaRecextPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#1c1a22] px-2 py-3 text-[#f3f1e9] sm:px-3 lg:px-4">
-      <div className="mx-auto max-w-[1920px]">
-        <RecextPageHeader />
-
-        <div className="grid gap-5 xl:grid-cols-[7fr_3fr]">
+    <div className="text-[var(--app-text)]">
+      <div>
+        <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
           <section className="space-y-5">
-            <RecextToolbar
-              afp={afp}
-              afpOptions={afpOptions}
-              isLoading={isLoading}
-              isError={isError}
-              onAfpChange={setAfp}
-              onSelectApiConsultas={() => navigate(appPaths.apiConsultas)}
-            />
-
-            <div className="rounded-[1rem] border border-white/5 bg-[#111015] p-3">
-              <p className="mb-3 text-[0.95rem] font-semibold text-[#f79b63]">
+            <div className="rounded-[1rem] border border-[var(--app-border)] bg-[var(--app-panel)] p-3">
+              <p className="mb-3 text-[0.95rem] font-semibold text-[var(--app-primary)]">
                 Flujo de consulta
               </p>
               <div className="grid gap-3 md:grid-cols-3">
                 {stepsByMode[consultationMode].map((step) => (
                   <div
-                    className="rounded-[0.75rem] border border-white/5 bg-[#1b1a22] p-3"
+                    className="rounded-[0.75rem] border border-[var(--app-border)] bg-[var(--app-surface-muted)] p-3"
                     key={step.title}
                   >
-                    <p className="text-[0.9rem] font-semibold text-[#f3f1e9]">
+                    <p className="text-[0.9rem] font-semibold text-[var(--app-text)]">
                       {step.title}
                     </p>
-                    <p className="mt-1 text-[0.85rem] leading-relaxed text-[#96959a]">
+                    <p className="mt-1 text-[0.85rem] leading-relaxed text-[var(--app-text-muted)]">
                       {step.description}
                     </p>
                   </div>
@@ -344,12 +327,12 @@ function ConsultaRecextPage() {
               </div>
             </div>
 
-            <div className="inline-flex rounded-[0.85rem] bg-[#111015] p-1">
+            <div className="inline-flex rounded-[var(--radius-md)] bg-[var(--app-panel)] p-1">
               <button
-                className={`rounded-[0.65rem] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#02d3ff]/50 ${
+                className={`rounded-[var(--radius-sm)] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] ${
                   consultationMode === 'json'
-                    ? 'bg-[#f79b63] text-[#111015]'
-                    : 'text-[#96959a] hover:text-[#f3f1e9]'
+                    ? 'bg-[var(--app-primary)] text-[var(--app-primary-contrast)]'
+                    : 'text-[var(--app-text-muted)] hover:text-[var(--app-text)]'
                 }`}
                 onClick={() => handleModeChange('json')}
                 type="button"
@@ -357,10 +340,10 @@ function ConsultaRecextPage() {
                 Pegar JSON
               </button>
               <button
-                className={`rounded-[0.65rem] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#02d3ff]/50 ${
+                className={`rounded-[var(--radius-sm)] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] ${
                   consultationMode === 'manual'
-                    ? 'bg-[#f79b63] text-[#111015]'
-                    : 'text-[#96959a] hover:text-[#f3f1e9]'
+                    ? 'bg-[var(--app-primary)] text-[var(--app-primary-contrast)]'
+                    : 'text-[var(--app-text-muted)] hover:text-[var(--app-text)]'
                 }`}
                 onClick={() => handleModeChange('manual')}
                 type="button"
@@ -408,7 +391,7 @@ function ConsultaRecextPage() {
         onCancel={() => setIsPasteModalOpen(false)}
         onLoadUserData={handleLoadPastedUserData}
       />
-    </main>
+    </div>
   )
 }
 

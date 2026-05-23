@@ -47,7 +47,7 @@ function RecextPasteUserModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-2 py-3"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--app-overlay)] px-2 py-3"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           handleCancel()
@@ -56,16 +56,16 @@ function RecextPasteUserModal({
     >
       <section
         aria-modal="true"
-        className="w-full max-w-[900px] rounded-[0.9rem] bg-[#322a42] p-3 text-[#f3f1e9] shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:p-4"
+        className="w-full max-w-[900px] rounded-[0.9rem] border border-[var(--app-border)] bg-[var(--app-surface)] p-3 text-[var(--app-text)] shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:p-4"
         role="dialog"
       >
         <div className="mb-8 flex items-start justify-between gap-4">
-          <h2 className="text-[1.35rem] font-semibold text-[#fff38b] sm:text-[1.55rem]">
+          <h2 className="text-[1.35rem] font-semibold text-[var(--app-primary)] sm:text-[1.55rem]">
             Cargar información de Usuario
           </h2>
           <button
             aria-label="Cerrar modal"
-            className="text-[2rem] leading-none text-[#fff38b] transition hover:text-white focus:outline-none focus:ring-2 focus:ring-[#fff38b]/60"
+            className="text-[2rem] leading-none text-[var(--app-primary)] transition hover:text-[var(--app-text)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)]"
             onClick={handleCancel}
             type="button"
           >
@@ -74,11 +74,11 @@ function RecextPasteUserModal({
         </div>
 
         <label className="block">
-          <span className="mb-4 block text-[1.05rem] text-[#f3f1e9] sm:text-[1.2rem]">
+          <span className="mb-4 block text-[1.05rem] text-[var(--app-text)] sm:text-[1.2rem]">
             Inserta o pega la información del usuario a consultar:
           </span>
           <textarea
-            className="min-h-[220px] w-full resize-y rounded-[0.75rem] border border-white/25 bg-[#1f1b2a] p-2 font-mono text-[0.95rem] leading-relaxed text-[#ffa36f] outline-none transition placeholder:text-[#8f879a] focus:border-[#02d3ff] focus:ring-2 focus:ring-[#02d3ff]/30"
+            className="min-h-[220px] w-full resize-y rounded-[var(--radius-sm)] border border-[var(--app-input-border)] bg-[var(--app-input-bg)] p-2 font-mono text-[0.95rem] leading-relaxed text-[var(--app-json-value)] outline-none transition placeholder:text-[var(--app-input-placeholder)] focus:border-[var(--app-accent)] focus:ring-2 focus:ring-[var(--app-focus-ring)]"
             onChange={(event) => {
               setJsonText(event.target.value)
               setErrorMessage(null)
@@ -89,21 +89,21 @@ function RecextPasteUserModal({
         </label>
 
         {errorMessage ? (
-          <p className="mt-3 rounded-[0.65rem] border border-[#f79b63]/40 bg-[#1f1b2a] px-2 py-1.5 text-[0.95rem] text-[#f79b63]">
+          <p className="mt-3 rounded-[0.65rem] border border-[var(--app-error)] bg-[var(--app-error-surface)] px-2 py-1.5 text-[0.95rem] text-[var(--app-error)]">
             {errorMessage}
           </p>
         ) : null}
 
         <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <button
-            className="rounded-[0.65rem] px-2 py-1 text-left text-[1rem] font-semibold text-[#f3f1e9] transition hover:text-white focus:outline-none focus:ring-2 focus:ring-white/40"
+            className="rounded-[var(--radius-sm)] px-2 py-1 text-left text-[1rem] font-semibold text-[var(--app-text-secondary)] transition hover:text-[var(--app-text)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)]"
             onClick={handleCancel}
             type="button"
           >
             Cancelar
           </button>
           <button
-            className="rounded-[0.65rem] bg-[#ff9b63] px-3 py-1.5 text-[1rem] font-semibold text-[#111015] transition hover:bg-[#ffad7f] focus:outline-none focus:ring-2 focus:ring-[#02d3ff]"
+            className="rounded-[var(--radius-sm)] bg-[var(--app-primary)] px-3 py-1.5 text-[1rem] font-semibold text-[var(--app-primary-contrast)] transition hover:bg-[var(--app-primary-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] disabled:cursor-not-allowed disabled:opacity-60"
             disabled={isSubmitting}
             onClick={handleLoad}
             type="button"
