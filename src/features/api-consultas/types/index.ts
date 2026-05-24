@@ -51,6 +51,7 @@ export interface ApiConsultaTransaccion {
   regimenTributario: string | null
   glosaBanco: string | null
   estadoTransaccion: string
+  glosaEstadoTransaccion: string | null
 }
 
 export interface ApiConsultaResponse {
