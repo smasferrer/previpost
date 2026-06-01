@@ -3,13 +3,19 @@ import AppSelect from '../ui/AppSelect'
 import Card from '../ui/Card'
 
 interface ConsultationContextPanelProps {
+  allowedAfps?: string[]
   className?: string
 }
 
 function ConsultationContextPanel({
+  allowedAfps,
   className = '',
 }: ConsultationContextPanelProps) {
   const { afp, afpOptions, isAfpError, isLoadingAfps, setAfp } = useAfpContext()
+
+  const visibleOptions = allowedAfps
+    ? afpOptions.filter((option) => allowedAfps.includes(option.value))
+    : afpOptions
 
   return (
     <Card
@@ -30,7 +36,7 @@ function ConsultationContextPanel({
         errorMessage={isAfpError ? 'Reintenta recargando la pagina.' : null}
         label="AFP activa"
         onChange={setAfp}
-        options={afpOptions.map((option) => ({
+        options={visibleOptions.map((option) => ({
           label: option.label,
           value: option.value,
         }))}
