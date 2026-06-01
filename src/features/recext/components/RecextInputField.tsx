@@ -29,6 +29,8 @@ function RecextInputField({
   const borderClassName = error
     ? 'border-[var(--app-error)]'
     : 'border-[var(--app-primary)]'
+  const optionClassName =
+    'bg-[var(--app-input-bg)] text-[var(--app-input-text)]'
 
   if (type === 'select') {
     return (
@@ -44,14 +46,24 @@ function RecextInputField({
             onChange={(event) => onChange(name, event.target.value)}
             className="w-full appearance-none bg-transparent pr-3.5 text-[1rem] italic text-[var(--app-input-text)] outline-none sm:text-[1.05rem]"
           >
-            <option value="" disabled={!clearable}>
+            <option
+              className={optionClassName}
+              value=""
+              disabled={!clearable}
+            >
               {placeholder}
             </option>
             {value && !options.some((option) => option.value === value) ? (
-              <option value={value}>{value}</option>
+              <option className={optionClassName} value={value}>
+                {value}
+              </option>
             ) : null}
             {options.map((option) => (
-              <option key={option.value} value={option.value}>
+              <option
+                className={optionClassName}
+                key={option.value}
+                value={option.value}
+              >
                 {option.label}
               </option>
             ))}

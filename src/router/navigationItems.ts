@@ -18,7 +18,7 @@ export const navigationItems: NavigationGroup[] = [
     items: [
       {
         label: 'Consulta Rec. Externa',
-        to: appPaths.consultaRecext,
+        to: appPaths.consultaRecext, 
       },
     ],
   },

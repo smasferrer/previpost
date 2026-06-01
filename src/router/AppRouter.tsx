@@ -9,7 +9,14 @@ import { appPaths } from './paths'
 function AppRouter() {
   return (
     <Routes>
-      <Route path={appPaths.home} element={<HomePage />} />
+      <Route
+        path={appPaths.home}
+        element={
+          <AppShell showSidebar={false}>
+            <HomePage />
+          </AppShell>
+        }
+      />
       <Route
         path={appPaths.consultaRecext}
         element={

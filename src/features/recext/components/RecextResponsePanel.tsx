@@ -203,29 +203,27 @@ function RecextResponsePanel({
 
   return (
     <aside className="min-w-0 rounded-[1.2rem] bg-[var(--app-surface)] p-2 shadow-[var(--shadow-md)] sm:p-2.5">
-      <div className="mb-4 rounded-[1rem] bg-[var(--app-panel)] px-3 py-2.5">
-        <h3 className="mb-3 text-[1rem] font-semibold text-[var(--app-text-muted)] sm:text-[1.05rem]">
-          Usuario
-        </h3>
-        <p className="text-[1rem] font-semibold text-[var(--app-text-muted)] sm:text-[1.05rem]">
-          Ultimos registros:
-        </p>
-      </div>
-
       <div className="rounded-[1rem] bg-[var(--app-surface-muted)] p-2">
-        <div
-          className={`mb-4 flex min-w-0 items-center justify-between gap-3 rounded-[0.8rem] border px-3 py-1.5 text-[1rem] font-semibold sm:text-[1.05rem] ${statusClassName}`}
-        >
-          <span className="shrink-0">Estado:</span>
-          <span className="min-w-0 truncate text-right">{visibleStatusCode}</span>
+        <div className="mb-4 flex min-w-0 flex-col gap-3 rounded-[0.95rem] bg-[var(--app-panel)] px-3 py-2.5">
+          <h3 className="text-[1rem] font-semibold text-[var(--app-text)] sm:text-[1.05rem]">
+            Respuesta Consulta Rec. Externa
+          </h3>
+          <div
+            className={`flex min-w-0 items-center justify-between gap-3 rounded-[0.8rem] border px-3 py-1.5 text-[1rem] font-semibold sm:text-[1.05rem] ${statusClassName}`}
+          >
+            <span className="shrink-0">Estado:</span>
+            <span className="min-w-0 truncate text-right">{visibleStatusCode}</span>
+          </div>
         </div>
 
         <div className="mt-4 min-w-0 overflow-hidden rounded-[0.95rem] bg-[var(--app-panel)]">
           <div className="border-b border-[var(--app-border)] px-2.5 py-1 text-[0.9rem] font-semibold text-[var(--app-text-muted)]">
-            Json
+            JSON / resultado
           </div>
           <pre className="line-clamp-[12] max-h-[300px] min-h-[258px] overflow-hidden whitespace-pre-wrap break-all bg-[var(--app-json-bg)] p-2.5 text-[0.85rem] leading-relaxed text-[var(--app-text-muted)]">
-            {renderJsonWithColors(visibleJson)}
+            {visibleJson
+              ? renderJsonWithColors(visibleJson)
+              : 'Ejecuta una consulta para ver la respuesta del backend.'}
           </pre>
         </div>
 

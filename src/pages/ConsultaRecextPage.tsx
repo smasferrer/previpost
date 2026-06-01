@@ -27,6 +27,7 @@ import {
   type RecextConsultationFormValues,
   type RecextConsultationResponse,
 } from '../features/recext/types'
+import ConsultationContextPanel from '../shared/components/layout/ConsultationContextPanel'
 import { useAfpContext } from '../shared/context/AfpContext'
 
 type RecextConsultationMode = 'json' | 'manual'
@@ -327,29 +328,33 @@ function ConsultaRecextPage() {
               </div>
             </div>
 
-            <div className="inline-flex rounded-[var(--radius-md)] bg-[var(--app-panel)] p-1">
-              <button
-                className={`rounded-[var(--radius-sm)] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] ${
-                  consultationMode === 'json'
-                    ? 'bg-[var(--app-primary)] text-[var(--app-primary-contrast)]'
-                    : 'text-[var(--app-text-muted)] hover:text-[var(--app-text)]'
-                }`}
-                onClick={() => handleModeChange('json')}
-                type="button"
-              >
-                Pegar JSON
-              </button>
-              <button
-                className={`rounded-[var(--radius-sm)] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] ${
-                  consultationMode === 'manual'
-                    ? 'bg-[var(--app-primary)] text-[var(--app-primary-contrast)]'
-                    : 'text-[var(--app-text-muted)] hover:text-[var(--app-text)]'
-                }`}
-                onClick={() => handleModeChange('manual')}
-                type="button"
-              >
-                Ingreso manual
-              </button>
+            <ConsultationContextPanel />
+
+            <div className="flex justify-stretch sm:justify-end">
+              <div className="inline-flex w-full rounded-[var(--radius-md)] bg-[var(--app-panel)] p-1 sm:w-fit">
+                <button
+                  className={`flex-1 rounded-[var(--radius-sm)] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] sm:flex-none ${
+                    consultationMode === 'json'
+                      ? 'bg-[var(--app-primary)] text-[var(--app-primary-contrast)]'
+                      : 'text-[var(--app-text-muted)] hover:text-[var(--app-text)]'
+                  }`}
+                  onClick={() => handleModeChange('json')}
+                  type="button"
+                >
+                  Pegar JSON
+                </button>
+                <button
+                  className={`flex-1 rounded-[var(--radius-sm)] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] sm:flex-none ${
+                    consultationMode === 'manual'
+                      ? 'bg-[var(--app-primary)] text-[var(--app-primary-contrast)]'
+                      : 'text-[var(--app-text-muted)] hover:text-[var(--app-text)]'
+                  }`}
+                  onClick={() => handleModeChange('manual')}
+                  type="button"
+                >
+                  Ingreso manual
+                </button>
+              </div>
             </div>
 
             {consultationMode === 'json' ? (

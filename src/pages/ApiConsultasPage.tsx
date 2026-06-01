@@ -21,6 +21,7 @@ import {
   buildConsultaTransaccionesDiaRequest,
 } from '../features/api-consultas/utils/buildApiConsultasPayload'
 import PageHeader from '../shared/components/layout/PageHeader'
+import ConsultationContextPanel from '../shared/components/layout/ConsultationContextPanel'
 import { useAfpContext } from '../shared/context/AfpContext'
 
 type ApiConsultasErrors = Partial<Record<ApiConsultasType, string>>
@@ -148,6 +149,8 @@ function ApiConsultasPage() {
               eyebrow="Servicio"
               title="API Consultas"
             />
+
+            <ConsultationContextPanel />
 
             {afpErrorMessage ? (
               <p className="rounded-[0.75rem] border border-[var(--app-error)] bg-[var(--app-error-surface)] px-3 py-2 text-[0.9rem] text-[var(--app-error)]">

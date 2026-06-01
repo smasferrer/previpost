@@ -1,9 +1,7 @@
-import { useAfpContext } from '../../context/AfpContext'
 import { useThemeContext } from '../../theme/useThemeContext'
 import AppSelect from '../ui/AppSelect'
 
 function AppTopbar() {
-  const { afp, afpOptions, isAfpError, isLoadingAfps, setAfp } = useAfpContext()
   const { setTheme, theme, themes } = useThemeContext()
 
   return (
@@ -28,27 +26,6 @@ function AppTopbar() {
                 value: option.id,
               }))}
               value={theme}
-            />
-          </div>
-
-          <div className="min-w-[240px]">
-            <AppSelect
-              disabled={isLoadingAfps || isAfpError}
-              errorMessage={isAfpError ? 'Reintenta recargando la pagina.' : null}
-              label="AFP activa"
-              onChange={setAfp}
-              options={afpOptions.map((option) => ({
-                label: option.label,
-                value: option.value,
-              }))}
-              placeholder={
-                isLoadingAfps
-                  ? 'Cargando AFP...'
-                  : isAfpError
-                    ? 'No fue posible cargar AFP'
-                    : 'Selecciona una AFP'
-              }
-              value={afp}
             />
           </div>
         </div>
