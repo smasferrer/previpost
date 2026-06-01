@@ -150,7 +150,7 @@ function ApiConsultasPage() {
               title="API Consultas"
             />
 
-            <ConsultationContextPanel />
+            <ConsultationContextPanel allowedAfps={['cuprum']} />
 
             {afpErrorMessage ? (
               <p className="rounded-[0.75rem] border border-[var(--app-error)] bg-[var(--app-error-surface)] px-3 py-2 text-[0.9rem] text-[var(--app-error)]">
