@@ -16,13 +16,13 @@ function ApiConsultasTypeSelector({
   onSelectType,
 }: ApiConsultasTypeSelectorProps) {
   return (
-    <div className="inline-flex flex-wrap rounded-[var(--radius-md)] bg-[var(--app-panel)] p-1">
+    <div className="inline-flex flex-wrap border-b border-[var(--app-border)]">
       {options.map((option) => (
         <button
-          className={`rounded-[var(--radius-sm)] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] ${
+          className={`border-b-2 px-3 py-2 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] ${
             selectedType === option.value
-              ? 'bg-[var(--app-primary)] text-[var(--app-primary-contrast)]'
-              : 'text-[var(--app-text-muted)] hover:text-[var(--app-text)]'
+              ? 'border-[var(--color-secondary)] text-[var(--color-secondary)]'
+              : 'border-transparent text-[var(--app-tab-inactive)] hover:text-[var(--color-secondary-hover)]'
           }`}
           key={option.value}
           onClick={() => onSelectType(option.value)}

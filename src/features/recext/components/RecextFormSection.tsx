@@ -31,7 +31,7 @@ function RecextFormSection({
   const isSubmitDisabled = !canSubmit || isSubmitting
 
   return (
-    <div className="min-h-[620px] rounded-[1.2rem] bg-[var(--app-surface)] px-2.5 py-2.5 shadow-[var(--shadow-md)] sm:px-4 sm:py-3.5">
+    <div className="min-h-[620px] rounded-[0.95rem] bg-[var(--app-surface)] px-2.5 py-2.5 shadow-[var(--shadow-md)] sm:px-4 sm:py-3.5">
       {showForm ? (
         <div>
           <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -42,14 +42,7 @@ function RecextFormSection({
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <button
-                className="text-left text-[13px] font-medium text-[var(--app-accent)] transition hover:text-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)]"
-                disabled={isSubmitting}
-                onClick={onPasteUserClick}
-                type="button"
-              >
-                Pegar información de Usuario
-              </button>
+              
 
               <RecextActionButton
                 disabled={isSubmitDisabled}

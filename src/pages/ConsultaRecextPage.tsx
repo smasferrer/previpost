@@ -327,13 +327,13 @@ function ConsultaRecextPage() {
 
             <ConsultationContextPanel />
 
-            <div className="flex justify-stretch sm:justify-end">
-              <div className="inline-flex w-full rounded-[var(--radius-md)] bg-[var(--app-panel)] p-1 sm:w-fit">
+            <div className="flex justify-stretch sm:justify-start">
+              <div className="inline-flex w-full border-b border-[var(--app-border)] sm:w-fit">
                 <button
-                  className={`flex-1 rounded-[var(--radius-sm)] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] sm:flex-none ${
+                  className={`flex-1 border-b-2 px-3 py-2 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] sm:flex-none ${
                     consultationMode === 'json'
-                      ? 'bg-[var(--app-primary)] text-[var(--app-primary-contrast)]'
-                      : 'text-[var(--app-text-muted)] hover:text-[var(--app-text)]'
+                      ? 'border-[var(--color-secondary)] text-[var(--color-secondary)]'
+                      : 'border-transparent text-[var(--app-tab-inactive)] hover:text-[var(--color-secondary-hover)]'
                   }`}
                   onClick={() => handleModeChange('json')}
                   type="button"
@@ -341,10 +341,10 @@ function ConsultaRecextPage() {
                   Pegar JSON
                 </button>
                 <button
-                  className={`flex-1 rounded-[var(--radius-sm)] px-3 py-1.5 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] sm:flex-none ${
+                  className={`flex-1 border-b-2 px-3 py-2 text-[0.95rem] font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] sm:flex-none ${
                     consultationMode === 'manual'
-                      ? 'bg-[var(--app-primary)] text-[var(--app-primary-contrast)]'
-                      : 'text-[var(--app-text-muted)] hover:text-[var(--app-text)]'
+                      ? 'border-[var(--color-secondary)] text-[var(--color-secondary)]'
+                      : 'border-transparent text-[var(--app-tab-inactive)] hover:text-[var(--color-secondary-hover)]'
                   }`}
                   onClick={() => handleModeChange('manual')}
                   type="button"

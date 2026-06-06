@@ -60,7 +60,7 @@ function ResponsePanel({
 
   return (
     <section
-      className={`min-w-0 max-w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-surface)] p-3 shadow-[var(--shadow-md)] ${className}`}
+      className={`min-w-0 max-w-full overflow-hidden rounded-[0.6rem] bg-[var(--color-surface)] p-3 shadow-[var(--shadow-md)] ${className}`}
     >
       <div className="mb-3 flex min-w-0 items-center justify-between gap-3">
         <h2 className="min-w-0 truncate text-base font-semibold text-[var(--color-text-secondary)]">
@@ -73,7 +73,7 @@ function ResponsePanel({
         </span>
       </div>
 
-      <div className="min-w-0 max-w-full overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-strong)]">
+      <div className="min-w-0 max-w-full overflow-hidden rounded-[0.3rem] border border-[var(--color-border)] bg-[var(--color-surface-strong)]">
         <div className="border-b border-[var(--color-border)] px-3 py-2 text-xs font-semibold text-[var(--color-text-muted)]">
           Contenido
         </div>

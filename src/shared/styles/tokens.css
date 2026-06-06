@@ -211,6 +211,7 @@
   --app-overlay: rgb(0 0 0 / 0.68);
   --app-sidebar-section-text: var(--app-accent);
   --app-sidebar-section-marker: var(--app-accent);
+  --app-tab-inactive: rgb(255 255 255 / 0.62);
 
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
@@ -229,6 +230,11 @@
 }
 
 :root[data-theme^='light'] {
+  --app-json-bg: var(--app-panel);
+  --app-json-key: var(--app-primary);
+  --app-json-value: var(--app-warning);
+  --app-json-punctuation: var(--app-text-secondary);
+  --app-tab-inactive: var(--app-text-muted);
   --shadow-sm: 0 8px 18px rgb(15 23 42 / 0.08);
   --shadow-md: 0 18px 38px rgb(15 23 42 / 0.12);
 }

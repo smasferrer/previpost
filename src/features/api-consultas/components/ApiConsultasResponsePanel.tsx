@@ -42,7 +42,7 @@ function TransactionDayResponseContent({
 }) {
   if (!data.datos.length) {
     return (
-      <div className="rounded-[var(--radius-md)] border border-[var(--app-border)] bg-[var(--app-panel)] p-3 text-[var(--app-text-muted)]">
+      <div className="rounded-[0.3rem] border border-[var(--app-border)] bg-[var(--app-panel)] p-3 text-[var(--app-text-muted)]">
         {data.message || 'La consulta no retornó transacciones para la fecha seleccionada.'}
       </div>
     )
@@ -50,7 +50,7 @@ function TransactionDayResponseContent({
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius-md)] border border-[var(--app-border)] bg-[var(--app-panel)] px-3 py-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-[0.3rem] border border-[var(--app-border)] bg-[var(--app-panel)] px-3 py-2">
         <span className="text-[0.85rem] text-[var(--app-text-muted)]">
           Total registros
         </span>
@@ -62,7 +62,7 @@ function TransactionDayResponseContent({
       <div className="space-y-2">
         {data.datos.map((transaction, index) => (
           <details
-            className="group overflow-hidden rounded-[var(--radius-md)] border border-[var(--app-border)] bg-[var(--app-panel)] [&_summary::-webkit-details-marker]:hidden"
+            className="group overflow-hidden rounded-[0.3rem] border border-[var(--app-border)] bg-[var(--app-panel)] [&_summary::-webkit-details-marker]:hidden"
             key={`${transaction.idTransaccion || 'transaccion'}-${index}`}
           >
             <summary className="flex cursor-pointer list-none items-center gap-3 px-3 py-2 transition hover:bg-[var(--app-surface-muted)] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[var(--app-focus-ring)]">

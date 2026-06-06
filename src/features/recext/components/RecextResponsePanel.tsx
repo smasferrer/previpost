@@ -160,43 +160,43 @@ function RecextResponsePanel({
   }
 
   return (
-    <aside className="min-w-0 rounded-[1.2rem] bg-[var(--app-surface)] p-2 shadow-[var(--shadow-md)] sm:p-2.5">
-      <div className="rounded-[1rem] bg-[var(--app-surface-muted)] p-2">
-        <div className="mb-4 flex min-w-0 flex-col gap-3 rounded-[0.95rem] bg-[var(--app-panel)] px-3 py-2.5">
-          <h3 className="text-[1rem] font-regular text-[var(--app-text)] sm:text-[1.05rem]">
+    <aside className="min-w-0 max-w-full overflow-hidden rounded-[0.6rem] border border-[var(--app-border)] bg-[var(--app-surface)] p-3 shadow-[var(--shadow-md)]">
+      <div className="space-y-3">
+        <div className="flex min-w-0 items-center justify-between gap-3">
+          <h3 className="min-w-0 truncate text-base font-semibold text-[var(--app-text-secondary)]">
             Respuesta Consulta Rec. Externa
           </h3>
           <div
-            className={`flex min-w-0 items-center justify-between gap-3 rounded-[0.8rem] border px-3 py-1.5 text-[1rem] font-regular sm:text-[0.90rem] ${statusClassName}`}
+            className={`flex shrink-0 items-center gap-2 rounded-[var(--radius-sm)] border px-2.5 py-1 text-xs font-semibold ${statusClassName}`}
           >
-            <span className="shrink-0">Estado:</span>
-            <span className="min-w-0 truncate text-right">{visibleStatusCode}</span>
+            <span>Estado</span>
+            <span>{visibleStatusCode}</span>
           </div>
         </div>
 
-        <div className="mt-4 min-w-0 overflow-hidden rounded-[0.95rem] bg-[var(--app-panel)]">
-          <div className="border-b border-[var(--app-border)] px-2.5 py-1 text-[0.9rem] font-regular text-[var(--app-text-muted)]">
-            JSON / resultado
+        <div className="min-w-0 max-w-full overflow-hidden rounded-[0.3rem] border border-[var(--app-border)] bg-[var(--app-panel)]">
+          <div className="border-b border-[var(--app-border)] px-3 py-2 text-xs font-semibold text-[var(--app-text-muted)]">
+            Contenido
           </div>
           <JsonViewer
-            className="line-clamp-[12] max-h-[300px] min-h-[258px] overflow-hidden break-all bg-[var(--app-json-bg)] p-2.5 text-[0.85rem] text-[var(--app-text-muted)]"
+            className="max-h-[300px] min-h-[258px] overflow-auto break-all bg-[var(--app-json-bg)] p-3 text-sm text-[var(--app-text-muted)]"
             emptyMessage="Ejecuta una consulta para ver la respuesta del backend."
             jsonText={visibleJson}
           />
         </div>
 
         {isLoading ? (
-          <p className="mt-4 rounded-[0.95rem] bg-[var(--app-surface-muted)] p-2.5 text-[0.95rem] text-[var(--app-text-muted)]">
+          <p className="rounded-[0.3rem] border border-[var(--app-border)] bg-[var(--app-panel)] p-3 text-[0.95rem] text-[var(--app-text-muted)]">
             Consultando backend...
           </p>
         ) : null}
         {!isLoading && error ? (
-          <p className="mt-4 rounded-[0.95rem] bg-[var(--app-error-surface)] p-2.5 text-[0.95rem] text-[var(--app-error)]">
+          <p className="rounded-[0.3rem] border border-[var(--app-error)] bg-[var(--app-error-surface)] p-3 text-[0.95rem] text-[var(--app-error)]">
             {error.message || 'No fue posible ejecutar la consulta.'}
           </p>
         ) : null}
         {!isLoading && !error && returnUrl ? (
-          <div className="mt-4 rounded-[0.8rem] border border-[var(--app-accent)] bg-[var(--app-panel)] p-2">
+          <div className="rounded-[0.3rem] border border-[var(--app-accent)] bg-[var(--app-panel)] p-3">
             <p className="mb-2 text-[0.85rem] font-semibold text-[var(--app-accent)]">
               URL de retorno detectada
             </p>
@@ -215,7 +215,7 @@ function RecextResponsePanel({
           </div>
         ) : null}
         {!isLoading && codigoPrevStr ? (
-          <div className="mt-4 rounded-[0.8rem] border border-[var(--app-primary)] bg-[var(--app-panel)] p-3">
+          <div className="rounded-[0.3rem] border border-[var(--app-primary)] bg-[var(--app-panel)] p-3">
             <p className="mb-3 text-[0.85rem] font-semibold text-[var(--app-primary)]">
               Código de respuesta Previred
             </p>

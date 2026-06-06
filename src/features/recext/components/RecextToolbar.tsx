@@ -16,7 +16,7 @@ function RecextToolbar({
   onAfpChange,
 }: RecextToolbarProps) {
   return (
-    <div className="rounded-[1.25rem] bg-[var(--app-primary-soft)] p-2 shadow-[var(--shadow-sm)]">
+    <div className="rounded-[1rem] bg-[var(--app-primary-soft)] p-2 shadow-[var(--shadow-sm)]">
       <div className="max-w-xl px-0.5 py-1.5">
         <span className="mb-2 block text-[1rem] font-medium text-[var(--app-primary)] sm:text-[1.1rem]">
           Seleccione AFP
