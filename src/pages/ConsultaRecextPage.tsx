@@ -28,6 +28,8 @@ import {
   type RecextConsultationResponse,
 } from '../features/recext/types'
 import ConsultationContextPanel from '../shared/components/layout/ConsultationContextPanel'
+import PageHeader from '../shared/components/layout/PageHeader'
+import ServiceHelpModal from '../shared/components/layout/ServiceHelpModal'
 import { useAfpContext } from '../shared/context/AfpContext'
 
 type RecextConsultationMode = 'json' | 'manual'
@@ -108,6 +110,7 @@ function ConsultaRecextPage() {
   const [consultationMode, setConsultationMode] =
     useState<RecextConsultationMode>('json')
   const [isPasteModalOpen, setIsPasteModalOpen] = useState(false)
+  const [isServiceHelpOpen, setIsServiceHelpOpen] = useState(false)
   const [jsonText, setJsonText] = useState('')
   const [jsonErrorMessage, setJsonErrorMessage] = useState<string | null>(null)
   const [formValues, setFormValues] = useState<RecextConsultationFormValues>(
@@ -307,26 +310,20 @@ function ConsultaRecextPage() {
       <div>
         <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
           <section className="space-y-5">
-            <div className="rounded-[1rem] border border-[var(--app-border)] bg-[var(--app-panel)] p-3">
-              <p className="mb-3 text-[0.95rem] font-semibold text-[var(--app-primary)]">
-                Flujo de consulta
-              </p>
-              <div className="grid gap-3 md:grid-cols-3">
-                {stepsByMode[consultationMode].map((step) => (
-                  <div
-                    className="rounded-[0.75rem] border border-[var(--app-border)] bg-[var(--app-surface-muted)] p-3"
-                    key={step.title}
-                  >
-                    <p className="text-[0.9rem] font-semibold text-[var(--app-text)]">
-                      {step.title}
-                    </p>
-                    <p className="mt-1 text-[0.85rem] leading-relaxed text-[var(--app-text-muted)]">
-                      {step.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <PageHeader
+              titleActions={
+                <button
+                  className="rounded-[var(--radius-sm)] px-1 py-1 text-sm font-semibold text-[var(--app-primary)] transition hover:text-[var(--app-primary-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)]"
+                  onClick={() => setIsServiceHelpOpen(true)}
+                  type="button"
+                >
+                  Información del servicio
+                </button>
+              }
+              description="Selecciona la AFP, carga la información del usuario y ejecuta la consulta al backend."
+              eyebrow="Servicio"
+              title="Recaudación Externa"
+            />
 
             <ConsultationContextPanel />
 
@@ -395,6 +392,26 @@ function ConsultaRecextPage() {
         isSubmitting={consultationMutation.isPending}
         onCancel={() => setIsPasteModalOpen(false)}
         onLoadUserData={handleLoadPastedUserData}
+      />
+
+      <ServiceHelpModal
+        flowSteps={stepsByMode[consultationMode]}
+        infoContent={
+          <p>
+            Recaudación Externa, también conocida como <em>Botón Embebido</em> o{' '}
+            <em>Depósitos Directos</em>, corresponde a una aplicación de Previred
+            que actúa como <em>una extensión de las instituciones previsionales</em>,
+            permitiendo que sus clientes realicen pagos de <em>APV</em> y/o{' '}
+            <em>Cuenta 2</em> directamente desde el sitio web de cada AFP. Esto se
+            logra mediante la integración de una página de Previred embebida en el
+            flujo de pago de la institución, asegurando una{' '}
+            <em>experiencia fluida para el usuario final</em> sin que este deba
+            abandonar el sitio de su AFP.
+          </p>
+        }
+        isOpen={isServiceHelpOpen}
+        onClose={() => setIsServiceHelpOpen(false)}
+        serviceName="Recaudación Externa"
       />
     </div>
   )

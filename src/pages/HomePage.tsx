@@ -1,8 +1,8 @@
 import { Link } from 'react-router'
 import apiIcon from '../assets/img/icono-apiconsultas.svg'
 import recextIcon from '../assets/img/icono-recext.svg'
-import logo from '../assets/img/logo-bajada.svg'
 import { appPaths } from '../router/paths'
+import AppLogo from '../shared/components/brand/AppLogo'
 import Card from '../shared/components/ui/Card'
 
 const options = [
@@ -27,11 +27,7 @@ function HomePage() {
     <section className="min-h-[calc(100svh-8.5rem)] px-4 pb-14 pt-8 text-center sm:px-6 sm:pb-16 sm:pt-10 lg:px-8 lg:pb-20 lg:pt-12">
       <div className="mx-auto flex w-full max-w-[1040px] flex-col items-center">
         <div className="mb-9 flex flex-col items-center sm:mb-11">
-          <img
-            src={logo}
-            alt="PreviPost"
-            className="mb-8 w-[185px] rounded-[var(--radius-md)] border border-[var(--app-brand-border)] bg-[var(--app-brand-bg)] px-3 py-2 sm:w-[220px]"
-          />
+          <AppLogo className="mb-8 w-[185px] rounded-[var(--radius-md)] px-3 py-2 sm:w-[220px]" />
 
           <h1 className="max-w-4xl text-4xl font-normal leading-tight text-[var(--color-text-primary)] sm:text-5xl lg:text-[3.5rem]">
             ¿Qué quieres hacer hoy?
@@ -59,15 +55,15 @@ function HomePage() {
                   />
                 </div>
 
-                <h2 className="min-h-[4.8rem] text-[2rem] font-semibold leading-tight text-[var(--color-text-primary)] sm:text-[2.25rem]">
+                <h2 className="min-h-[3.5rem] text-[2rem] font-semibold leading-tight text-[var(--color-text-primary)] sm:text-[1.8rem]">
                   {option.title}
                 </h2>
 
-                <p className="mt-5 max-w-[260px] text-[1.05rem] leading-relaxed text-[var(--color-secondary)] sm:text-[1.1rem]">
+                <p className="mb-3 mt-0 max-w-[260px] text-[1.05rem] leading-relaxed text-[var(--color-secondary)] sm:text-[1.1rem]">
                   {option.description}
                 </p>
 
-                <span className="mt-auto inline-flex items-center justify-center rounded-[var(--radius-sm)] bg-[var(--color-primary)] px-4 py-2 text-sm font-semibold text-[var(--color-primary-contrast)] transition group-hover:bg-[var(--color-primary-hover)]">
+                <span className="mt-auto inline-flex items-center justify-center rounded-[var(--radius-sm)] bg-[var(--color-primary)] px-4 py-2 text-md font-semibold text-[var(--color-primary-contrast)] transition group-hover:bg-[var(--color-primary-hover)] w-full max-w-[160px]">
                   Ingresar
                 </span>
               </Card>

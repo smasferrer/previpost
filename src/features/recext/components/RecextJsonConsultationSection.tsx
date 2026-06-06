@@ -53,7 +53,7 @@ function RecextJsonConsultationSection({
       </div>
 
       <Textarea
-        className="min-h-[420px] resize-y border-[var(--app-input-border)] bg-[var(--app-input-bg)] font-mono text-[0.95rem] leading-relaxed text-[var(--app-json-value)]"
+        className="min-h-[420px] resize-y border-[var(--app-input-border)] bg-[var(--app-input-bg)] text-[0.95rem] leading-relaxed text-[var(--app-json-value)]"
         error={errorMessage ?? undefined}
         label="Información del usuario"
         onChange={(event) => onJsonTextChange(event.target.value)}

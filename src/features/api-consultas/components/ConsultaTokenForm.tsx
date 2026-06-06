@@ -34,7 +34,7 @@ function ConsultaTokenForm({
       </div>
 
       <Textarea
-        className="min-h-[180px] border-[var(--app-input-border)] bg-[var(--app-input-bg)] font-mono text-[var(--app-input-text)]"
+        className="min-h-[180px] border-[var(--app-input-border)] bg-[var(--app-input-bg)] text-[var(--app-input-text)]"
         error={errorMessage ?? undefined}
         label="Token"
         onChange={(event) => onTokenChange(event.target.value)}

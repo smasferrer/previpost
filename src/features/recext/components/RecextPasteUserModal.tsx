@@ -78,7 +78,7 @@ function RecextPasteUserModal({
             Inserta o pega la información del usuario a consultar:
           </span>
           <textarea
-            className="min-h-[220px] w-full resize-y rounded-[var(--radius-sm)] border border-[var(--app-input-border)] bg-[var(--app-input-bg)] p-2 font-mono text-[0.95rem] leading-relaxed text-[var(--app-json-value)] outline-none transition placeholder:text-[var(--app-input-placeholder)] focus:border-[var(--app-accent)] focus:ring-2 focus:ring-[var(--app-focus-ring)]"
+            className="min-h-[220px] w-full resize-y rounded-[var(--radius-sm)] border border-[var(--app-input-border)] bg-[var(--app-input-bg)] p-2 text-[0.95rem] leading-relaxed text-[var(--app-json-value)] outline-none transition placeholder:text-[var(--app-input-placeholder)] focus:border-[var(--app-accent)] focus:ring-2 focus:ring-[var(--app-focus-ring)]"
             onChange={(event) => {
               setJsonText(event.target.value)
               setErrorMessage(null)

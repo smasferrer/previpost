@@ -22,6 +22,7 @@ import {
 } from '../features/api-consultas/utils/buildApiConsultasPayload'
 import PageHeader from '../shared/components/layout/PageHeader'
 import ConsultationContextPanel from '../shared/components/layout/ConsultationContextPanel'
+import ServiceHelpModal from '../shared/components/layout/ServiceHelpModal'
 import { useAfpContext } from '../shared/context/AfpContext'
 
 type ApiConsultasErrors = Partial<Record<ApiConsultasType, string>>
@@ -34,10 +35,30 @@ const getApiConsultasType = (value: string | null): ApiConsultasType | null => {
   return null
 }
 
+const apiConsultasFlowSteps = [
+  {
+    title: 'Paso 1: Seleccionar tipo de consulta',
+    description: 'Elige si la búsqueda será por RUT, por transacciones del día o por Token.',
+  },
+  {
+    title: 'Paso 2: Seleccionar AFP',
+    description: 'Actualmente API Consultas se encuentra habilitada exclusivamente para Cuprum.',
+  },
+  {
+    title: 'Paso 3: Ingresar parámetros',
+    description: 'Completa el RUT, la fecha o el token según el tipo de consulta seleccionado.',
+  },
+  {
+    title: 'Paso 4: Ejecutar consulta',
+    description: 'El backend obtiene un token de sesión y consulta la API externa con la credencial configurada.',
+  },
+]
+
 function ApiConsultasPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const selectedType = getApiConsultasType(searchParams.get('tipo')) ?? 'rut'
   const { afp } = useAfpContext()
+  const [isServiceHelpOpen, setIsServiceHelpOpen] = useState(false)
   const [rut, setRut] = useState('')
   const [fecha, setFecha] = useState('')
   const [token, setToken] = useState('')
@@ -145,6 +166,15 @@ function ApiConsultasPage() {
         <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
           <section className="space-y-5">
             <PageHeader
+              titleActions={
+                <button
+                  className="rounded-[var(--radius-sm)] px-1 py-1 text-sm font-semibold text-[var(--app-primary)] transition hover:text-[var(--app-primary-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)]"
+                  onClick={() => setIsServiceHelpOpen(true)}
+                  type="button"
+                >
+                  Información del servicio
+                </button>
+              }
               description="Selecciona el tipo de consulta, completa los datos mínimos y ejecuta la llamada al backend."
               eyebrow="Servicio"
               title="API Consultas"
@@ -209,6 +239,29 @@ function ApiConsultasPage() {
           />
         </div>
       </div>
+
+      <ServiceHelpModal
+        flowSteps={apiConsultasFlowSteps}
+        infoContent={
+          <p>
+            API Consultas es un servicio desarrollado a solicitud de la{' '}
+            <em>AFP Cuprum</em>, cuyo propósito es exponer la información de la
+            tabla <em>TRX_Rec_Externa_Bitacora</em> a las instituciones
+            previsionales, permitiendo consultar el <em>estado de las transacciones</em>{' '}
+            realizadas a través de Recaudación Externa. El servicio ofrece tres
+            tipos de consulta: <em>por RUT</em>, <em>por transacciones del día</em>{' '}
+            y <em>por Token</em>. Esta API responde a la necesidad de las
+            instituciones de validar el estado de sus transacciones sin requerir{' '}
+            <em>acceso directo a las bases de datos internas de Previred</em>,
+            manteniendo así las políticas de seguridad y aislamiento de datos.
+            Actualmente, el servicio se encuentra habilitado{' '}
+            <em>exclusivamente para Cuprum</em>.
+          </p>
+        }
+        isOpen={isServiceHelpOpen}
+        onClose={() => setIsServiceHelpOpen(false)}
+        serviceName="API Consultas"
+      />
     </div>
   )
 }

@@ -21,16 +21,6 @@ const fallbackAfpOptions: AfpOption[] = [
   { value: 'cuprum', label: 'CUPRUM' },
 ]
 
-const extractCollection = (
-  payload: AfpOption[] | ApiCollectionResponse<AfpOption>,
-): AfpOption[] => {
-  if (Array.isArray(payload)) {
-    return payload
-  }
-
-  return payload.data ?? payload.items ?? payload.results ?? []
-}
-
 const apiPath = (path: string) => {
   const normalizedBaseUrl = env.apiBaseUrl.replace(/\/$/, '')
 
@@ -42,15 +32,7 @@ export const getAfpOptions = async (): Promise<AfpOption[]> => {
     return fallbackAfpOptions
   }
 
-  try {
-    const { data } = await apiClient.get<AfpOption[] | ApiCollectionResponse<AfpOption>>(
-      '/rex/afps',
-    )
-
-    return extractCollection(data)
-  } catch {
-    return fallbackAfpOptions
-  }
+  return fallbackAfpOptions
 }
 
 export const submitRecextConsultation = async (
@@ -58,7 +40,7 @@ export const submitRecextConsultation = async (
 ): Promise<RecextConsultationResponse> => {
   try {
     const response = await apiClient.post<RecextConsultationResponse['data']>(
-      '/api/form/external',
+      apiPath('/form/external'),
       payload,
     )
 

@@ -205,11 +205,11 @@ function RecextResponsePanel({
     <aside className="min-w-0 rounded-[1.2rem] bg-[var(--app-surface)] p-2 shadow-[var(--shadow-md)] sm:p-2.5">
       <div className="rounded-[1rem] bg-[var(--app-surface-muted)] p-2">
         <div className="mb-4 flex min-w-0 flex-col gap-3 rounded-[0.95rem] bg-[var(--app-panel)] px-3 py-2.5">
-          <h3 className="text-[1rem] font-semibold text-[var(--app-text)] sm:text-[1.05rem]">
+          <h3 className="text-[1rem] font-regular text-[var(--app-text)] sm:text-[1.05rem]">
             Respuesta Consulta Rec. Externa
           </h3>
           <div
-            className={`flex min-w-0 items-center justify-between gap-3 rounded-[0.8rem] border px-3 py-1.5 text-[1rem] font-semibold sm:text-[1.05rem] ${statusClassName}`}
+            className={`flex min-w-0 items-center justify-between gap-3 rounded-[0.8rem] border px-3 py-1.5 text-[1rem] font-regular sm:text-[0.90rem] ${statusClassName}`}
           >
             <span className="shrink-0">Estado:</span>
             <span className="min-w-0 truncate text-right">{visibleStatusCode}</span>
@@ -217,7 +217,7 @@ function RecextResponsePanel({
         </div>
 
         <div className="mt-4 min-w-0 overflow-hidden rounded-[0.95rem] bg-[var(--app-panel)]">
-          <div className="border-b border-[var(--app-border)] px-2.5 py-1 text-[0.9rem] font-semibold text-[var(--app-text-muted)]">
+          <div className="border-b border-[var(--app-border)] px-2.5 py-1 text-[0.9rem] font-regular text-[var(--app-text-muted)]">
             JSON / resultado
           </div>
           <pre className="line-clamp-[12] max-h-[300px] min-h-[258px] overflow-hidden whitespace-pre-wrap break-all bg-[var(--app-json-bg)] p-2.5 text-[0.85rem] leading-relaxed text-[var(--app-text-muted)]">
@@ -264,7 +264,7 @@ function RecextResponsePanel({
             <div className="space-y-2">
               <div className="flex flex-wrap items-baseline gap-x-2">
                 <span className="shrink-0 text-[0.8rem] text-[var(--app-text-muted)]">Código de Error:</span>
-                <span className="font-mono text-[0.95rem] font-bold text-[var(--app-primary)]">
+                <span className="text-[0.95rem] font-bold text-[var(--app-primary)]">
                   {codigoPrevStr}
                 </span>
               </div>

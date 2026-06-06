@@ -36,6 +36,10 @@ const withDefaultHeaders = (config: InternalAxiosRequestConfig) => {
 
 const toApiError = (error: AxiosError<unknown>): ApiError => {
   const responseData = error.response?.data
+  const requestUrl = `${error.config?.baseURL ?? ''}${error.config?.url ?? ''}`
+  const fallbackNetworkMessage = requestUrl
+    ? `No fue posible conectar con el backend (${requestUrl}). Revisa que el servicio esté levantado y que VITE_API_BASE_URL apunte al puerto correcto.`
+    : 'No fue posible conectar con el backend. Revisa que el servicio esté levantado.'
   const responseMessage =
     typeof responseData === 'object' &&
     responseData !== null &&
@@ -54,7 +58,10 @@ const toApiError = (error: AxiosError<unknown>): ApiError => {
   return {
     status: error.response?.status ?? 0,
     statusText: error.response?.statusText,
-    message: responseMessage ?? responseError ?? error.message ?? 'Unexpected API error',
+    message:
+      responseMessage ??
+      responseError ??
+      (error.response ? error.message : fallbackNetworkMessage),
     details: responseData,
   }
 }

@@ -6,6 +6,7 @@ interface PageHeaderProps {
   description?: ReactNode
   eyebrow?: ReactNode
   title: ReactNode
+  titleActions?: ReactNode
 }
 
 function PageHeader({
@@ -14,6 +15,7 @@ function PageHeader({
   description,
   eyebrow,
   title,
+  titleActions,
 }: PageHeaderProps) {
   return (
     <header
@@ -25,7 +27,12 @@ function PageHeader({
             {eyebrow}
           </p>
         ) : null}
-        <h1 className="text-2xl font-semibold sm:text-3xl">{title}</h1>
+        <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
+          <h1 className="text-2xl font-semibold sm:text-3xl">{title}</h1>
+          {titleActions ? (
+            <div className="flex shrink-0 flex-wrap gap-2">{titleActions}</div>
+          ) : null}
+        </div>
         {description ? (
           <p className="mt-2 max-w-3xl text-sm text-[var(--color-text-secondary)]">
             {description}
