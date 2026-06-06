@@ -28,10 +28,6 @@ const apiPath = (path: string) => {
 }
 
 export const getAfpOptions = async (): Promise<AfpOption[]> => {
-  if (!env.apiBaseUrl) {
-    return fallbackAfpOptions
-  }
-
   return fallbackAfpOptions
 }
 
