@@ -235,6 +235,7 @@ function ApiConsultasPage() {
 
           <ApiConsultasResponsePanel
             data={responseData}
+            selectedType={selectedType}
             status={responseStatus}
           />
         </div>

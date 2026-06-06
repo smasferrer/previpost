@@ -3,6 +3,7 @@ import type {
   RecextConsultationResponse,
 } from '../types'
 import { CODIGOS_PREV } from '../codigosPrev'
+import JsonViewer from '../../../shared/components/feedback/JsonViewer'
 
 interface RecextResponsePanelProps {
   error?: RecextConsultationError | null
@@ -21,49 +22,6 @@ const formatJson = (value: unknown) => {
   } catch {
     return String(value)
   }
-}
-
-const jsonTokenPattern =
-  /("(?:\\u[\dA-Fa-f]{4}|\\[^u]|[^\\"])*"(?=\s*:))|("(?:\\u[\dA-Fa-f]{4}|\\[^u]|[^\\"])*")|(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)|\b(true|false|null)\b|([{}[\]])/g
-
-const renderJsonWithColors = (jsonText: string) => {
-  if (!jsonText) {
-    return null
-  }
-
-  const parts = []
-  let currentIndex = 0
-
-  for (const match of jsonText.matchAll(jsonTokenPattern)) {
-    const matchIndex = match.index ?? 0
-
-    if (matchIndex > currentIndex) {
-      parts.push(jsonText.slice(currentIndex, matchIndex))
-    }
-
-    const [token, key, stringValue, numberValue, literalValue, bracket] = match
-    const colorClassName = bracket
-      ? 'text-[var(--app-json-punctuation)]'
-      : key
-        ? 'text-[var(--app-json-key)]'
-        : stringValue || numberValue || literalValue
-          ? 'text-[var(--app-json-value)]'
-          : 'text-[var(--app-text-muted)]'
-
-    parts.push(
-      <span className={colorClassName} key={`${matchIndex}-${token}`}>
-        {token}
-      </span>,
-    )
-
-    currentIndex = matchIndex + token.length
-  }
-
-  if (currentIndex < jsonText.length) {
-    parts.push(jsonText.slice(currentIndex))
-  }
-
-  return parts
 }
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -220,11 +178,11 @@ function RecextResponsePanel({
           <div className="border-b border-[var(--app-border)] px-2.5 py-1 text-[0.9rem] font-regular text-[var(--app-text-muted)]">
             JSON / resultado
           </div>
-          <pre className="line-clamp-[12] max-h-[300px] min-h-[258px] overflow-hidden whitespace-pre-wrap break-all bg-[var(--app-json-bg)] p-2.5 text-[0.85rem] leading-relaxed text-[var(--app-text-muted)]">
-            {visibleJson
-              ? renderJsonWithColors(visibleJson)
-              : 'Ejecuta una consulta para ver la respuesta del backend.'}
-          </pre>
+          <JsonViewer
+            className="line-clamp-[12] max-h-[300px] min-h-[258px] overflow-hidden break-all bg-[var(--app-json-bg)] p-2.5 text-[0.85rem] text-[var(--app-text-muted)]"
+            emptyMessage="Ejecuta una consulta para ver la respuesta del backend."
+            jsonText={visibleJson}
+          />
         </div>
 
         {isLoading ? (

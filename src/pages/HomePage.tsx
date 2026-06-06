@@ -29,7 +29,7 @@ function HomePage() {
         <div className="mb-9 flex flex-col items-center sm:mb-11">
           <AppLogo className="mb-8 w-[185px] rounded-[var(--radius-md)] px-3 py-2 sm:w-[220px]" />
 
-          <h1 className="max-w-4xl text-4xl font-normal leading-tight text-[var(--color-text-primary)] sm:text-5xl lg:text-[3.5rem]">
+          <h1 className="max-w-4xl text-4xl font-normal leading-tight text-[var(--color-text-primary)] sm:text-5xl lg:text-[2.5rem]">
             ¿Qué quieres hacer hoy?
           </h1>
         </div>
@@ -39,7 +39,7 @@ function HomePage() {
             <Link
               key={option.title}
               to={option.to}
-              className="group h-full rounded-[var(--radius-xl)] focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)]/50"
+              className="group h-full rounded-[var(--radius-2xl)] focus:outline-none focus:ring-2 focus:ring-[var(--color-secondary)]/50"
             >
               <Card
                 as="article"

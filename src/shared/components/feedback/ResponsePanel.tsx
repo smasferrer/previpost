@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import JsonViewer from './JsonViewer'
 
 type ResponsePanelStatus = 'idle' | 'loading' | 'success' | 'error'
 
@@ -56,7 +57,6 @@ function ResponsePanel({
   title = 'Respuesta',
 }: ResponsePanelProps) {
   const formattedPayload = content ? '' : formatPayload(data)
-  const visibleContent = content ?? (formattedPayload || emptyMessage)
 
   return (
     <section
@@ -77,9 +77,17 @@ function ResponsePanel({
         <div className="border-b border-[var(--color-border)] px-3 py-2 text-xs font-semibold text-[var(--color-text-muted)]">
           Contenido
         </div>
-        <pre className="max-w-full overflow-auto whitespace-pre-wrap break-words p-3 text-sm leading-relaxed text-[var(--color-text-secondary)] [overflow-wrap:anywhere]">
-          {visibleContent}
-        </pre>
+        {content ? (
+          <div className="max-w-full overflow-auto p-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            {content}
+          </div>
+        ) : (
+          <JsonViewer
+            className="p-3 text-sm text-[var(--color-text-secondary)]"
+            emptyMessage={emptyMessage}
+            jsonText={formattedPayload}
+          />
+        )}
       </div>
     </section>
   )
