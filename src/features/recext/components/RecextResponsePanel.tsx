@@ -179,7 +179,7 @@ function RecextResponsePanel({
             Contenido
           </div>
           <JsonViewer
-            className="max-h-[300px] min-h-[258px] overflow-auto break-all bg-[var(--app-json-bg)] p-3 text-sm text-[var(--app-text-muted)]"
+            className="max-h-[300px] min-h-[258px] overflow-auto bg-[var(--app-json-bg)] p-3 text-sm text-[var(--app-text-muted)]"
             emptyMessage="Ejecuta una consulta para ver la respuesta del backend."
             jsonText={visibleJson}
           />

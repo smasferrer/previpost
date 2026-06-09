@@ -254,18 +254,47 @@ function ConsultaRecextPage() {
     consultationMutation.mutate(buildRecextRequest(formValues, afp))
   }
 
-  const handleLoadPastedUserData = (payload: Record<string, unknown>) => {
-    if (!isRecextAfpCode(afp)) {
-      return 'Selecciona una AFP antes de cargar y consultar datos.'
-    }
-
+  const getPastedUserFormValues = (payload: Record<string, unknown>) => {
     const nextFormValues = mapPastedUserToFormValues(formValues, payload)
     const missingMandatoryField = mandatoryFields.find(
       ({ name }) => !nextFormValues[name].trim(),
     )
 
     if (missingMandatoryField) {
-      return `El JSON no incluye un valor para el campo obligatorio: ${missingMandatoryField.label}.`
+      return {
+        errorMessage: `El JSON no incluye un valor para el campo obligatorio: ${missingMandatoryField.label}.`,
+        values: null,
+      }
+    }
+
+    return {
+      errorMessage: null,
+      values: nextFormValues,
+    }
+  }
+
+  const handlePrefillPastedUserData = (payload: Record<string, unknown>) => {
+    const { errorMessage, values } = getPastedUserFormValues(payload)
+
+    if (errorMessage || !values) {
+      return errorMessage
+    }
+
+    setFormValues(values)
+
+    return null
+  }
+
+  const handleLoadPastedUserData = (payload: Record<string, unknown>) => {
+    if (!isRecextAfpCode(afp)) {
+      return 'Selecciona una AFP antes de cargar y consultar datos.'
+    }
+
+    const { errorMessage, values: nextFormValues } =
+      getPastedUserFormValues(payload)
+
+    if (errorMessage || !nextFormValues) {
+      return errorMessage
     }
 
     setFormValues(nextFormValues)
@@ -391,7 +420,7 @@ function ConsultaRecextPage() {
         isOpen={isPasteModalOpen}
         isSubmitting={consultationMutation.isPending}
         onCancel={() => setIsPasteModalOpen(false)}
-        onLoadUserData={handleLoadPastedUserData}
+        onLoadUserData={handlePrefillPastedUserData}
       />
 
       <ServiceHelpModal

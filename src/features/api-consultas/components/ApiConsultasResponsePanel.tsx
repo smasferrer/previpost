@@ -20,6 +20,8 @@ const statusLabels: Record<ApiConsultasStatus, string> = {
   error: 'Error',
 }
 
+const noRecordsMessage = 'No existe registros para esa consulta.'
+
 const formatTransactionDetail = (transaction: ApiConsultaTransaccion) =>
   JSON.stringify(transaction, null, 2)
 
@@ -35,7 +37,7 @@ const buildTransactionDescription = (transaction: ApiConsultaTransaccion) => {
     .join(' · ')
 }
 
-function TransactionDayResponseContent({
+function TransactionListResponseContent({
   data,
 }: {
   data: ApiConsultaResponse
@@ -43,7 +45,7 @@ function TransactionDayResponseContent({
   if (!data.datos.length) {
     return (
       <div className="rounded-[0.3rem] border border-[var(--app-border)] bg-[var(--app-panel)] p-3 text-[var(--app-text-muted)]">
-        {data.message || 'La consulta no retornó transacciones para la fecha seleccionada.'}
+        {noRecordsMessage}
       </div>
     )
   }
@@ -110,15 +112,19 @@ function ApiConsultasResponsePanel({
   selectedType,
   status,
 }: ApiConsultasResponsePanelProps) {
-  const shouldShowTransactionDayView =
-    selectedType === 'transacciones-dia' && status === 'success' && data
+  const shouldShowTransactionListView =
+    (selectedType === 'rut' ||
+      selectedType === 'transacciones-dia' ||
+      selectedType === 'token') &&
+    status === 'success' &&
+    data
 
   return (
     <ResponsePanel
       className="min-h-[360px] min-w-0 max-w-full border border-[var(--app-border)] bg-[var(--app-surface)]"
       content={
-        shouldShowTransactionDayView ? (
-          <TransactionDayResponseContent data={data} />
+        shouldShowTransactionListView ? (
+          <TransactionListResponseContent data={data} />
         ) : undefined
       }
       data={data}

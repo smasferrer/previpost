@@ -52,7 +52,7 @@ function JsonViewer({
 }: JsonViewerProps) {
   return (
     <pre
-      className={`max-w-full overflow-auto whitespace-pre-wrap break-words leading-relaxed [overflow-wrap:anywhere] ${className}`}
+      className={`max-w-full overflow-auto whitespace-pre-wrap break-normal leading-relaxed [overflow-wrap:normal] ${className}`}
     >
       {jsonText ? renderJsonWithColors(jsonText) : emptyMessage}
     </pre>

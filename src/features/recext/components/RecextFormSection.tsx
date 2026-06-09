@@ -29,6 +29,8 @@ function RecextFormSection({
   onSubmit,
 }: RecextFormSectionProps) {
   const isSubmitDisabled = !canSubmit || isSubmitting
+  const prefillButtonClassName =
+    'w-full rounded-[var(--radius-sm)] bg-transparent px-1 py-1.5 text-left text-[1rem] font-semibold text-[var(--color-secondary)] transition hover:text-[var(--color-secondary-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto'
 
   return (
     <div className="min-h-[620px] rounded-[0.95rem] bg-[var(--app-surface)] px-2.5 py-2.5 shadow-[var(--shadow-md)] sm:px-4 sm:py-3.5">
@@ -42,7 +44,14 @@ function RecextFormSection({
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              
+              <button
+                className={prefillButtonClassName}
+                disabled={isSubmitting}
+                onClick={onPasteUserClick}
+                type="button"
+              >
+                Prellenar información
+              </button>
 
               <RecextActionButton
                 disabled={isSubmitDisabled}
@@ -91,12 +100,12 @@ function RecextFormSection({
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <button
-                className="text-left text-[13px] font-medium text-[var(--app-text-muted)] transition hover:text-[var(--app-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--app-focus-ring)]"
+                className={prefillButtonClassName}
                 disabled={isSubmitting}
                 onClick={onPasteUserClick}
                 type="button"
               >
-                Pegar información de Usuario
+                Prellenar información
               </button>
 
               <RecextActionButton

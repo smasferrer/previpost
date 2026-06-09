@@ -61,7 +61,7 @@ function RecextPasteUserModal({
       >
         <div className="mb-8 flex items-start justify-between gap-4">
           <h2 className="text-[1.35rem] font-semibold text-[var(--app-primary)] sm:text-[1.55rem]">
-            Cargar información de Usuario
+            Prellenar información
           </h2>
           <button
             aria-label="Cerrar modal"
@@ -75,7 +75,7 @@ function RecextPasteUserModal({
 
         <label className="block">
           <span className="mb-4 block text-[1.05rem] text-[var(--app-text)] sm:text-[1.2rem]">
-            Inserta o pega la información del usuario a consultar:
+            Inserta o pega la información del usuario:
           </span>
           <textarea
             className="min-h-[220px] w-full resize-y rounded-[var(--radius-sm)] border border-[var(--app-input-border)] bg-[var(--app-input-bg)] p-2 text-[0.95rem] leading-relaxed text-[var(--app-json-value)] outline-none transition placeholder:text-[var(--app-input-placeholder)] focus:border-[var(--app-accent)] focus:ring-2 focus:ring-[var(--app-focus-ring)]"
@@ -108,7 +108,7 @@ function RecextPasteUserModal({
             onClick={handleLoad}
             type="button"
           >
-            {isSubmitting ? 'Consultando...' : 'Cargar y consultar datos'}
+            Prellenar formulario
           </button>
         </div>
       </section>
